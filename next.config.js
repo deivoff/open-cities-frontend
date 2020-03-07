@@ -13,8 +13,6 @@ const getTsAliases = (tsconfigPath = './tsconfig.json') => {
       [name]: path.join(__dirname, aliasPath)
     };
   }, {});
-  
-  
 };
 
 

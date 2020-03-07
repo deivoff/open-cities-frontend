@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typegen": "apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=frontend/src/**/*.ts"
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",

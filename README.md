@@ -1,2 +1,13 @@
 # Open Cities Frontend
-Open Cities Project. Frontend service.
+
+## Запуск проекта
+
+1. Необходимо установить зависимости для клиента:
+
+        yarn 
+
+2. Команда для запуска:
+
+        yarn start
+
+## Развертывание проекта на бою
