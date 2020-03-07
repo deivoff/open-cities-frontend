@@ -20,7 +20,9 @@
     "baseUrl": ".",
     "paths": {
       "$widgets/*": ["src/widgets/*"],
-      "$static/*": ["src/static/*"]
+      "$static/*": ["src/static/*"],
+      "$apollo/*": ["src/apollo/*"],
+      "$components/*": ["src/components/*"]
     }
   },
   "exclude": [

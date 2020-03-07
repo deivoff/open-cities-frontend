@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Banner, getRandomInt } from '$widgets/MainBanner';
 
