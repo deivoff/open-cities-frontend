@@ -1,19 +1,23 @@
 import React, { useState, MouseEvent, useContext } from 'react';
+import Link from 'next/link';
 import cn from 'classnames';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { Button, GoogleButton, Modal, Spiner } from '$components/index';
-import { GET_GOOGLE_REDIRECT_URL, AUTH_GOOGLE, GET_CITIES, GetCities } from '../../apollo';
-import { AuthContext, User } from '../../context';
+import {
+  GET_GOOGLE_REDIRECT_URL,
+  GET_CITIES,
+  GetCities
+} from '$apollo/queries';
+import { AUTH_GOOGLE } from '$apollo/mutations';
+import { AuthContext, User } from '$context/auth';
 
-import s from './header.module.sass';
+import s from './Header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
 const CitiesList: React.FC = () => {
   const { data, loading: citiesLoading, error: citiesError } = useQuery<GetCities>(GET_CITIES);
 
-  if (citiesLoading) return null;
-  if (citiesError) return null;
-  if (!data) return null;
+  if (citiesLoading || citiesError || !data) return null;
 
   const { cities } = data;
 
@@ -23,12 +27,7 @@ const CitiesList: React.FC = () => {
         {cities
           ? cities.map(({ name, url, zoom, center }) => (
               <li className={cn(s['nav__elem'])} key={name}>
-                <Link
-                  to={{
-                    pathname: `/cities/${url}`,
-                    state: { center, zoom, name },
-                  }}
-                >
+                <Link href="[city]/map" as={`${url}/map`}>
                   {name}
                 </Link>
               </li>
@@ -51,13 +50,13 @@ const Profile: React.FC<Profile> = ({ user: { name, photos }, logout }) => {
         <div className={cn(s['nav__dropdown'], s['_profile'])}>
           <ul className={cn(s['nav__list'], s['_profile'])}>
             <li className={s['nav__elem']}>
-              <Link to="/profile">Мой профиль</Link>
+              <Link href="/profile">Мой профиль</Link>
             </li>
             <li className={s['nav__elem']}>
-              <Link to="/maps">Мои карты</Link>
+              <Link href="/maps">Мои карты</Link>
             </li>
             <li className={s['nav__elem']}>
-              <Link to="/researches">Мои исследования</Link>
+              <Link href="/researches">Мои исследования</Link>
             </li>
             <li className={s['nav__elem']} onClick={logout}>
               Выйти
@@ -105,6 +104,7 @@ export const Header: React.FC = () => {
         const { token: responseToken } = data.authGoogle;
         login(responseToken);
       } catch (error) {
+        console.error(error);
         throw error;
       } finally {
         setAuthLoading(false);
@@ -119,13 +119,14 @@ export const Header: React.FC = () => {
 
       window.addEventListener('message', authHandler.bind(loginWindow));
     } catch (error) {
+      console.error(error);
       throw error;
     }
   };
   return (
     <header className={cn(s.header)}>
-      <Link className={s.logo} to="/">
-        Открытые города
+      <Link href="/">
+        <a className={s.logo}>Открытые города</a>
       </Link>
       <button type="button" className={s['nav__button']}>
         <span />
@@ -135,10 +136,10 @@ export const Header: React.FC = () => {
       <nav className={s.nav}>
         <ul className={cn(s['nav__list'])}>
           <li className={cn(s['nav__elem'])}>
-            <Link to="/about">О проекте</Link>
+            <Link href="/about">О проекте</Link>
           </li>
           <li className={cn(s['nav__elem'])}>
-            <Link to="/research">Исследования</Link>
+            <Link href="/research">Исследования</Link>
           </li>
           <li className={cn(s['nav__elem'], s['_dropdown'])}>
             Города

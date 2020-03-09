@@ -22,7 +22,8 @@
       "$widgets/*": ["src/widgets/*"],
       "$static/*": ["src/static/*"],
       "$apollo/*": ["src/apollo/*"],
-      "$components/*": ["src/components/*"]
+      "$components/*": ["src/components/*"],
+      "$context/*": ["src/context/*"]
     }
   },
   "exclude": [
