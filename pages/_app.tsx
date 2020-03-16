@@ -4,7 +4,7 @@ import ApolloClient from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-common';
 import { AuthContext, useAuth } from '$context/auth';
 import { Header } from '$widgets/Header';
-import withData from '../lib/apollo';
+import withData from '$lib/apollo';
 
 
 import '$static/styles/_main.sass';

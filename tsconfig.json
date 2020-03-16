@@ -23,7 +23,9 @@
       "$static/*": ["src/static/*"],
       "$apollo/*": ["src/apollo/*"],
       "$components/*": ["src/components/*"],
-      "$context/*": ["src/context/*"]
+      "$context/*": ["src/context/*"],
+      "$HOCs/*": ["src/HOCs/*"],
+      "$lib/*": ["lib/*"]
     }
   },
   "exclude": [
