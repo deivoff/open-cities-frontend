@@ -6,8 +6,6 @@ export const GET_CITIES = gql`
     cities {
       name
       url
-      center
-      zoom
     }
   }
 `;

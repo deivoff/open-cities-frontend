@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-common';
 import { AuthContext, useAuth } from '$context/auth';
+
 import { Header } from '$widgets/Header';
 import withData from '$lib/apollo';
 
@@ -18,12 +19,11 @@ const OpenCitiesApp = ({
   apollo
 }: OpenCitiesProps) => {
   const authContext = useAuth();
-
   return (
     <ApolloProvider client={apollo}>
     <AuthContext.Provider value={authContext}>
-      <Header />
-      <Component {...pageProps} />
+        <Header />
+        <Component {...pageProps} />
     </AuthContext.Provider>
     </ApolloProvider>
   );

@@ -25,10 +25,12 @@ const CitiesList: React.FC = () => {
     <div className={cn(s['nav__dropdown'])}>
       <ul className={cn(s['nav__list'])}>
         {cities
-          ? cities.map(({ name, url, zoom, center }) => (
+          ? cities.map(({ name, url }) => (
               <li className={cn(s['nav__elem'])} key={name}>
-                <Link href="[city]/map" as={`${url}/map`}>
-                  {name}
+                <Link href="[city]" as={`${url}`}>
+                  <a>
+                    {name}
+                  </a>
                 </Link>
               </li>
             ))

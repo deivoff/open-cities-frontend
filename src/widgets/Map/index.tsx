@@ -13,7 +13,7 @@ interface MapProps {
 const useGetLayersQuery = (city: string) =>
   useQuery<GetLayers, GetLayersVariables>(GET_LAYERS, { variables: { city } });
 
-const Map: React.FC<MapProps> = ({ center = [22, 22], zoom = 13, city = 'tym' }) => {
+const Map: React.FC<MapProps> = ({ center, zoom, city }) => {
   const { data: layersData, loading: layersLoading, error: layersError } = useGetLayersQuery(city);
 
   if (layersError) return null;

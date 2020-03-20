@@ -3,15 +3,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCities
+// GraphQL query operation: GetCity
 // ====================================================
 
-export interface GetCities_cities {
+export interface GetCity_getCity {
   __typename: "City";
   name: string;
-  url: string;
+  center: any;
+  zoom: number;
 }
 
-export interface GetCities {
-  cities: GetCities_cities[];
+export interface GetCity {
+  getCity: GetCity_getCity | null;
+}
+
+export interface GetCityVariables {
+  url: string;
 }

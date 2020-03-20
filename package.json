@@ -10,7 +10,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "typegen": "apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=frontend/src/**/*.ts"
+    "typegen": "npx apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=src/**/*.ts"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",

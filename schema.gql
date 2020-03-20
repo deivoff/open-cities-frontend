@@ -1,0 +1,136 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type AuthRedirect {
+    url: String!
+}
+
+type AuthResponse {
+    token: String!
+}
+
+type City {
+    _id: ID!
+    center: GeometryCoords!
+    name: String!
+    photo: String!
+    url: String!
+    zoom: Int!
+}
+
+type Geo {
+    _id: ID!
+    access: UserType!
+    author: User!
+    createdAt: DateTime!
+    geometry: Geometry!
+    layer: Layer!
+    properties: JSON!
+    updatedAt: DateTime!
+}
+
+type Geometry {
+    coords: GeometryCoords!
+    type: GeometryType!
+}
+
+type GoogleProvider {
+    id: String!
+    token: String!
+}
+
+type Layer {
+    _id: ID!
+    access: UserType!
+    city: String!
+    createdAt: DateTime!
+    description: String!
+    geoCollection: [Geo!]!
+    name: String!
+    owner: User!
+    subscribers: [User!]!
+    updatedAt: DateTime!
+}
+
+type Mutation {
+    authGoogle(code: String!): AuthResponse!
+    createGeo(geoInput: GeoInput!): Geo!
+    createLayer(layerInput: LayerInput!): Layer!
+}
+
+type Query {
+    cities: [City!]!
+    geos: [Geo!]!
+    getCity(url: String!): City
+    getGoogleOAuthRedirect: AuthRedirect!
+    getUsers: [User!]!
+    layers(city: String!): [Layer!]!
+}
+
+type User {
+    _id: ID!
+    email: String!
+    name: UserName!
+    photos: [UserPhoto!]!
+    role: UserType!
+    social: UserSocial!
+}
+
+type UserName {
+    familyName: String!
+    givenName: String!
+}
+
+type UserPhoto {
+    url: String!
+}
+
+type UserSocial {
+    googleProvider: GoogleProvider!
+}
+
+enum GeometryType {
+    LineString
+    MultiLineString
+    MultiPoint
+    MultiPolygon
+    Point
+    Polygon
+}
+
+enum UserType {
+    admin
+    researcher
+    user
+}
+
+input GeoInput {
+    geometry: GeometryInput!
+    layer: ID!
+    properties: JSON!
+}
+
+input GeometryInput {
+    coords: GeometryCoords!
+    type: GeometryType!
+}
+
+input LayerInput {
+    city: String!
+    description: String!
+    name: String!
+}
+
+
+"The javascript `Date` as string. Type represents date and time as the ISO Date string."
+scalar DateTime
+
+"Coordinates scalar type"
+scalar GeometryCoords
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
