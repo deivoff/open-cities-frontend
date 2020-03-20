@@ -33,9 +33,9 @@ export default withApollo(({ initialState }) =>
     new ApolloClient({
       name: 'open-cities',
       link: link,
-      cache: new InMemoryCache()
-        //  rehydrate the cache using the initial data passed from the server:
+      cache: new InMemoryCache()        //  rehydrate the cache using the initial data passed from the server:
         .restore(initialState || {}),
+      ssrMode: true,
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'cache-and-network',

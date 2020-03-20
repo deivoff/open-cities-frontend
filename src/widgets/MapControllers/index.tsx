@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { LayersControl } from 'react-leaflet';
+import { LayersControl, useLeaflet } from 'react-leaflet';
 
 import css from './MapControllers.module.sass';
 import { Modal } from '$components/modal';
@@ -43,6 +43,8 @@ export const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
 };
 
 export const MapControllers: React.FC<MapControllersProps> = ({ defaultCity }) => {
+  const leaflet = useLeaflet();
+  console.log(leaflet);
   return (
     <>
       <CreateLayerModal city={defaultCity} />

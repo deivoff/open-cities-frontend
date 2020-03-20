@@ -1,26 +1,31 @@
 import React from 'react';
 import Head from 'next/head';
-import { Page } from '$components/layout';
-import { Spiner } from '$components/spiner';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 import { NextPage } from 'next';
 import { useQuery } from '@apollo/react-hooks';
-import { GetCity, GetCityVariables } from '$apollo/queries/types/GetCity';
-import { GET_CITY } from '$apollo/queries/GetCity';
+import { Page } from '$components/layout';
+import { Spiner } from '$components/spiner';
+import {
+  GET_CITY,
+  GetCity,
+  GetCityVariables
+} from '$apollo/queries/GetCity';
 
 const DynamicMap = dynamic(() => import('$widgets/Map'), { ssr: false });
+const useCityDefaultSettings = (url: string) => useQuery<GetCity, GetCityVariables>(GET_CITY, {
+  variables: {
+    url
+  }
+});
 
 const MapPage: NextPage = () => {
   const { query } = useRouter();
   const url = query['city'] as string;
 
-  const { data, error, loading } = useQuery<GetCity, GetCityVariables>(GET_CITY, {
-    variables: {
-      url
-    }
-  });
+  if (!url) return <Spiner />;
+  const { data, error, loading } = useCityDefaultSettings(url);
 
   if (loading && !data) return <Spiner />;
   if (error) return <Error statusCode={500} />;
