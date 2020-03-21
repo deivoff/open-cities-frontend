@@ -3,17 +3,17 @@ $sm: 576px
 $md: 768px
 $lg: 992px
 $xl: 1200px
-  
+
 @mixin between($from, $to)
   @media (min-width: $from) and (max-width: $to)
     @content
 
 @mixin above($from)
-  @media (min-width: $from) 
+  @media (min-width: $from)
     @content
 
 @mixin below($to)
-  @media (max-width: $to) 
+  @media (max-width: $to)
     @content
 
 @mixin container($type: default)

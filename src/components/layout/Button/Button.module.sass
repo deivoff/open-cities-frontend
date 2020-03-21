@@ -1,10 +1,9 @@
-@import './../../../static/styles/variables'
 @import './../../../static/styles/grid'
 
 .button
   background: none
   border: none
-  color: $w
+  color: var(--w)
   font-size: 14px
   line-height: 18px
   padding: 8px 35px
@@ -21,7 +20,7 @@
     transform: translateY(-1px) scale(.95)
 
 ._success
-  background-color: $successColor
+  background-color: var(--successColor)
 
 .google-button
   color: #c27467
@@ -37,5 +36,13 @@
   display: block
   transition-duration: .3s
   &:hover
-    color: $w
+    color: var(--w)
     background-color: #c27467
+
+.icon-button
+  width: 24px
+  height: 24px
+  border-radius: 100%
+  border: none
+  background-color: gray
+

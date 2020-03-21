@@ -21,10 +21,10 @@ const OpenCitiesApp = ({
   const authContext = useAuth();
   return (
     <ApolloProvider client={apollo}>
-    <AuthContext.Provider value={authContext}>
+      <AuthContext.Provider value={authContext}>
         <Header />
         <Component {...pageProps} />
-    </AuthContext.Provider>
+      </AuthContext.Provider>
     </ApolloProvider>
   );
 };

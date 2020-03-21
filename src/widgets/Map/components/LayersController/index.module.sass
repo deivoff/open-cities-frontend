@@ -1,7 +1,55 @@
-.layers
-  z-index: 1000
+.layers-controller
   background-color: white
-  height: 100%
-  width: 200px
-  position: absolute
-  padding: 25px 35px
+  position: relative
+  height: calc(100vh - var(--header-height))
+  width: 300px
+  padding: 25px 20px
+  margin: -10px
+  transition-duration: .2s
+
+  &[aria-hidden="true"]
+    transform: translateX(-300px)
+
+  &__button
+    position: absolute
+    top: 24px
+    right: -12px
+
+    &[aria-expanded="false"]
+      background-color: green
+
+
+  &__list
+    padding-top: 10px
+    font-size: 12px
+
+  &__title
+    text-transform: uppercase
+    margin-bottom: 12px
+    font-size: 9px
+    opacity: .5
+
+.layer-controller
+  display: flex
+  flex-direction: column
+
+  &__header
+    display: flex
+    align-items: center
+    border-bottom: 1px solid #C8C8C8
+    border-top: 1px solid #C8C8C8
+    padding: 15px
+
+  &__eye
+    margin-left: auto
+    &._visible
+      background-color: blue
+
+  &__body
+    padding-left: 40px
+    transition-duration: .2s
+
+
+    &[aria-hidden="true"]
+      transform: scaleY(0)
+

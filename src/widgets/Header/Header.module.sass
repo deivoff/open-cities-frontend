@@ -1,15 +1,14 @@
-@import './../../static/styles/variables'
 @import './../../static/styles/grid'
 
 .header
-  color: $w
+  color: var(--w)
   padding: 20px 30px
-  min-height: 80px
+  min-height: var(--header-width)
   width: 100%
   display: flex
   justify-content: space-between
   align-items: center
-  background-color: $mainColor
+  background-color: var(--mainColor)
   @include below($md)
     padding: 15px 20px
     min-height: 0
@@ -69,7 +68,7 @@
         height: 1px
         width: 18px
         display: block
-        background-color: $w
+        background-color: var(--w)
         left: 0
         &:nth-child(1)
           top: 0
@@ -123,13 +122,13 @@
             display: block
             border-left: 8px solid transparent
             border-right: 8px solid transparent
-            border-bottom: 12px solid $w
+            border-bottom: 12px solid var(--w)
             position: absolute
             top: 20px
             right: 150px
 
           & > .nav__list
-            background-color: $w
+            background-color: var(--w)
             padding: 25px 5px
             border-radius: 20px
             min-width: 300px
@@ -148,5 +147,5 @@
         &__list
           flex-flow: column wrap
         &__elem
-          color: $mainColor
+          color: var(--mainColor)
           margin-bottom: 5px
