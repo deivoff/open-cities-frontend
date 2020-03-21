@@ -8,6 +8,7 @@
 
 export interface GetCity_getCity {
   __typename: "City";
+  _id: string;
   name: string;
   center: any;
   zoom: number;

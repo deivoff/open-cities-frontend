@@ -8,6 +8,7 @@ export interface AuthContext {
   logout: () => void;
 }
 
+type UserRole = 'user' | 'researcher' | 'admin';
 export interface User {
   id: string;
   email: string;
@@ -15,6 +16,7 @@ export interface User {
     givenName: string;
     familyName: string;
   };
+  access: UserRole;
   photos: [
     {
       url: string;
@@ -44,16 +46,24 @@ export const useAuth = (): AuthContext => {
     const savedToken = localStorage.getItem('token');
     if (savedToken) {
       setToken(savedToken);
-      const { email, name, photos, id } = jwtDecode<User>(savedToken);
-      setUser({ email, name, photos, id });
+      const {
+        email, name, photos, id, access,
+      } = jwtDecode<User>(savedToken);
+      setUser({
+        email, name, photos, id, access,
+      });
     }
   }, []);
 
   const login: Login = (token: string) => {
     setToken(token);
     localStorage.setItem('token', token);
-    const { email, name, photos, id }: User = jwtDecode(token);
-    setUser({ email, name, photos, id });
+    const {
+      email, name, photos, id, access,
+    }: User = jwtDecode(token);
+    setUser({
+      email, name, photos, id, access,
+    });
   };
 
   const logout = () => {
@@ -62,5 +72,7 @@ export const useAuth = (): AuthContext => {
     setUser(null);
   };
 
-  return { login, logout, token, user };
+  return {
+    login, logout, token, user,
+  };
 };

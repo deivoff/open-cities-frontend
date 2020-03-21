@@ -8,6 +8,8 @@ module.exports = {
     },
     extends: [
         "eslint:recommended",
+        "airbnb",
+        "airbnb/hooks",
         "plugin:react/recommended",
         "plugin:security/recommended",
         "plugin:@typescript-eslint/eslint-recommended"
@@ -35,9 +37,13 @@ module.exports = {
     plugins: [
         "react",
         "graphql",
-        "@typescript-eslint"
+        "react-hooks",
+        "@typescript-eslint",
     ],
     rules: {
+        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/interface-name-prefix": 0,
         "graphql/template-strings": ['error', {
@@ -46,13 +52,31 @@ module.exports = {
             validators: 'all',
             schemaJson,
         }],
+        "arrow-parens": ["error", "as-needed"],
+        "import/extensions": [2, "never"],
+        "import/prefer-default-export": "off",
         "graphql/named-operations": ['warn', {
             schemaJson,
         }],
+        "indent": ["error", 2],
+        "dot-notation": [0],
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+        "camelcase": [0]
     },
     settings:  {
         "react":  {
             "version":  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
         },
-    },
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "typescript": {}
+        }
+    }
 };

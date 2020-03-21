@@ -1,4 +1,5 @@
 import { gql } from 'apollo-boost';
+
 export * from './types/AuthGoogle';
 
 export const AUTH_GOOGLE = gql`

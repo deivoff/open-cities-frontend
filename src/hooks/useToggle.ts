@@ -5,4 +5,4 @@ export default (initialState: boolean): [boolean, () => void] => {
   const handleToggle = () => setState(prevState => !prevState);
 
   return [state, handleToggle];
-}
+};

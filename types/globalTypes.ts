@@ -6,6 +6,20 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum GeometryType {
+  LineString = "LineString",
+  MultiLineString = "MultiLineString",
+  MultiPoint = "MultiPoint",
+  MultiPolygon = "MultiPolygon",
+  Point = "Point",
+  Polygon = "Polygon",
+}
+
+export interface GeometryInput {
+  coords: any;
+  type: GeometryType;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -1,18 +1,20 @@
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 import { MapControl, MapControlProps, withLeaflet } from 'react-leaflet';
-import { Control, Map, DomUtil, DomEvent } from "leaflet";
+import {
+  Control, Map, DomUtil, DomEvent,
+} from 'leaflet';
 
 const DumbControl = Control.extend({
   options: {
-    className: "",
-    onOff: "",
-    handleOff: function noop() {}
+    className: '',
+    onOff: '',
+    handleOff: function noop() {},
   },
 
   onAdd(/* map */) {
-    const _controlDiv = DomUtil.create("div", this.options.className);
-    DomEvent.disableClickPropagation(_controlDiv);
-    return _controlDiv;
+    const controlDiv = DomUtil.create('div', this.options.className);
+    DomEvent.disableClickPropagation(controlDiv);
+    return controlDiv;
   },
 
   onRemove(map: Map) {
@@ -21,13 +23,13 @@ const DumbControl = Control.extend({
     }
 
     return this;
-  }
+  },
 });
 
 export default withLeaflet(
   class LeafletControl extends MapControl {
     createLeafletElement(props: MapControlProps) {
-      return new DumbControl(Object.assign({}, props));
+      return new DumbControl({ ...props });
     }
 
     componentDidMount() {
@@ -47,8 +49,8 @@ export default withLeaflet(
       }
       return ReactDOM.createPortal(
         this.props.children,
-        this.leafletElement.getContainer()!
+        this.leafletElement.getContainer()!,
       );
     }
-  }
+  },
 );

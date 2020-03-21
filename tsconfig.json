@@ -20,6 +20,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "$types/*": ["types/*"],
       "$widgets/*": ["src/widgets/*"],
       "$static/*": ["src/static/*"],
       "$apollo/*": ["src/apollo/*"],

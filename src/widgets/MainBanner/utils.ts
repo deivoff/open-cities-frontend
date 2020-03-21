@@ -1,6 +1,7 @@
-export const getRandomInt = (min: number, max: number) => {
-  return -(-(Math.random() * (max - min) + min)).toFixed(2);
-};
+export const getRandomInt = (
+  min: number,
+  max: number,
+) => -(-(Math.random() * (max - min) + min)).toFixed(2);
 
 export const getRandomNormal = (min: number, max: number, skew = 1): number => {
   let u = 0;
