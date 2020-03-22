@@ -8,7 +8,7 @@ export const GET_GEOS = gql`
             _id
             geometry {
                 type
-                coords
+                coordinates
             }
             properties
         }

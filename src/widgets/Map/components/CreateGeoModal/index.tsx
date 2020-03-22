@@ -2,21 +2,15 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { Modal } from '$components/modal';
 import {
-  CREATE_GEO, CreateGeo, CreateGeo_createGeo, CreateGeoVariables,
+  CREATE_GEO, CreateGeo, CreateGeoVariables,
 } from '$apollo/mutations';
 import { GET_GEOS, GetGeos, GetGeosVariables } from '$apollo/queries';
-import { CreateForm } from './components/CreateForm';
+import { CreateForm, Values } from './CreateForm';
 
 type CreateGeoModal = React.FC<{
   layerId: CreateGeoVariables['layer']
 }>
 
-type Values = {
-  geometry: Pick<CreateGeo_createGeo['geometry'], 'type' | 'coords'>,
-  properties: {
-    [key in string]: any;
-  }
-};
 const useCreateGeoMutation = (
   layerId: string,
 ) => useMutation<CreateGeo, CreateGeoVariables>(CREATE_GEO, {
@@ -49,10 +43,9 @@ export const CreateGeoModal: CreateGeoModal = ({ layerId }) => {
     setModalOpen(false);
   };
 
-  const handlerSubmit = ({ geometry, properties }: Values) => createGeo({
+  const handlerSubmit = (values: Values) => createGeo({
     variables: {
-      geometry,
-      properties,
+      ...values,
       layer: layerId,
     },
   });

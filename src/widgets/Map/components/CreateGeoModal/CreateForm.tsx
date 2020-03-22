@@ -1,14 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { CreateGeo_createGeo } from '$apollo/mutations';
+import { CreateGeo } from '$apollo/mutations';
 import { Button } from '$components/layout';
 import { GeometryType } from '$types/globalTypes';
 
 type Props = {
   handlerSubmit: (values: Values) => void;
 }
-type Values = {
-  geometry: Pick<CreateGeo_createGeo['geometry'], 'type' | 'coords'>,
+export type Values = {
+  geometry: Pick<CreateGeo['createGeo']['geometry'], 'type' | 'coordinates'>,
   properties: {
     [key in string]: any;
   }
@@ -18,14 +18,11 @@ export const CreateForm: React.FC<Props> = (({ handlerSubmit }) => {
     initialValues: {
       geometry: {
         type: GeometryType.Point,
-        coords: [0, 0],
+        coordinates: [65.5152054, 57.1668968],
       },
       properties: {},
     },
-    onSubmit: async ({
-      geometry,
-      properties,
-    }) => handlerSubmit({ geometry, properties }),
+    onSubmit: async values => handlerSubmit(values),
   });
 
   return (

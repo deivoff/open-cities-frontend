@@ -11,7 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint:fix": "npx eslint --fix",
-    "typegen": "npx apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=src/**/*.ts"
+    "typegen:json": "npx apollo schema:download --endpoint=http://localhost:4000/graphql schema.json",
+    "typegen": "yarn typegen:json & npx apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=src/**/*.ts"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",

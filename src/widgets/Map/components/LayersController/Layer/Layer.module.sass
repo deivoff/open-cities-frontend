@@ -1,0 +1,29 @@
+.layer-controller
+  display: flex
+  flex-direction: column
+  margin-top: -1px
+  overflow: hidden
+
+  &__header
+    display: flex
+    align-items: center
+    border-bottom: 1px solid #C8C8C8
+    border-top: 1px solid #C8C8C8
+    padding: 15px
+
+    &._green
+      border-left: 5px solid #00D522
+
+  &__eye
+    margin-left: auto
+
+  &__arrow
+    margin-right: 6px
+
+  &__body
+    padding-left: 40px
+    transition-duration: .2s
+
+
+    &[aria-hidden="true"]
+      height: 0

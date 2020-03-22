@@ -16,7 +16,7 @@ export enum GeometryType {
 }
 
 export interface GeometryInput {
-  coords: any;
+  coordinates: any;
   type: GeometryType;
 }
 

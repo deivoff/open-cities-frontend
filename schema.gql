@@ -34,7 +34,7 @@ type Geo {
 }
 
 type Geometry {
-    coords: GeometryCoords!
+    coordinates: GeometryCoords!
     type: GeometryType!
 }
 
@@ -114,7 +114,7 @@ input GeoInput {
 }
 
 input GeometryInput {
-    coords: GeometryCoords!
+    coordinates: GeometryCoords!
     type: GeometryType!
 }
 

@@ -11,7 +11,7 @@ import { GeometryInput, GeometryType } from "./../../../../types/globalTypes";
 export interface CreateGeo_createGeo_geometry {
   __typename: "Geometry";
   type: GeometryType;
-  coords: any;
+  coordinates: any;
 }
 
 export interface CreateGeo_createGeo {

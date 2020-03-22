@@ -1,4 +1,5 @@
 import { gql } from 'apollo-boost';
+
 export * from './types/GetLayers';
 
 export const GET_LAYERS = gql`

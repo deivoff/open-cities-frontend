@@ -1,4 +1,5 @@
 import { gql } from 'apollo-boost';
+
 export * from './types/GetCity';
 
 export const GET_CITY = gql`

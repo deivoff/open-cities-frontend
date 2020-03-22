@@ -1,17 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { useLeaflet } from 'react-leaflet';
-import cn from 'classnames';
 import useToggle from '$hooks/useToggle';
-import { IconButton, Spiner } from '$components/index';
+import { IconButton } from '$components/index';
+import { useAuth } from '$context/auth';
 import {
   GET_LAYERS, GetLayers, GetLayersVariables,
-  GET_GEOS, GetGeos, GetGeosVariables,
 } from '$apollo/queries';
+import Layer from './Layer';
+import CreateLayerModal from '../CreateLayerModal';
 
 import css from './index.module.sass';
-import { useAuth } from '$context/auth';
-import { CreateGeoModal } from '../CreateGeoModal';
 
 
 const useGetLayersQuery = (
@@ -23,23 +21,29 @@ type LayersController = React.FC<{
 }>
 export const LayersController: LayersController = ({ city }) => {
   const { data: layersData, loading: layersLoading, error: layersError } = useGetLayersQuery(city);
+  const { user } = useAuth();
   const [open, handlerOpen] = useToggle(true);
 
   if (layersError) return null;
   if (layersLoading || !layersData) return null;
+  const isResearcher = user?.access !== 'user';
 
   return (
     <div
       className={css['layers-controller']}
       aria-hidden={!open}
     >
-      <IconButton
-        className={css['layers-controller__button']}
-        icon="arrow"
-        aria-expanded={open}
-        onClick={handlerOpen}
-      />
-      <h3>Слои</h3>
+      <div className={css['layers-controller__header']}>
+        <IconButton
+          className={css['layers-controller__button']}
+          icon="arrow"
+          theme={open ? 'disabled' : 'success'}
+          aria-expanded={open}
+          onClick={handlerOpen}
+        />
+        <h3>Слои</h3>
+        {isResearcher && <CreateLayerModal city={city} />}
+      </div>
       <Layers layers={layersData?.layers} />
     </div>
   );
@@ -53,69 +57,8 @@ const Layers: Layers = ({ layers }) => {
     <ul className={css['layers-controller__list']}>
       <h3 className={css['layers-controller__title']}>Пользовательские слои</h3>
       {layers.map(layer => (
-        <Layer key={layer._id} layer={layer} />
+        <Layer className={css['layers-controller__elem']} key={layer._id} layer={layer} />
       ))}
     </ul>
-  );
-};
-
-type Layer = React.FC<{ layer: GetLayers['layers'][0] }>
-const useGetGeos = (layerId: string) => useQuery<GetGeos, GetGeosVariables>(GET_GEOS, {
-  variables: {
-    layerId,
-  },
-});
-const Layer: Layer = ({ layer: { _id, name, description } }) => {
-  const { map } = useLeaflet();
-  const { user } = useAuth();
-  const [open, handlerOpen] = useToggle(true);
-  const [visible, handlerVisible] = useToggle(false);
-  const { data, error, loading } = useGetGeos(_id);
-  const isResearcher = user?.access !== 'user';
-  let buttonVisible = <Spiner />;
-
-  if (error) {
-    buttonVisible = <>X</>;
-  }
-  if (loading) {
-    buttonVisible = (<Spiner />);
-  }
-  if (data) {
-    buttonVisible = (
-      <IconButton
-        icon="eye"
-        onClick={handlerVisible}
-        className={cn(
-          css['layer-controller__eye'],
-          visible && css['_visible'],
-        )}
-      />
-    );
-  }
-
-  return (
-    <li
-      className={cn(
-        css['layers-controller__elem'],
-        css['layer-controller'],
-      )}
-    >
-      <div className={css['layer-controller__header']}>
-        <IconButton
-          icon="arrow"
-          onClick={handlerOpen}
-          aria-expanded={open}
-        />
-        {name}
-        {buttonVisible}
-      </div>
-      <div
-        className={css['layer-controller__body']}
-        aria-hidden={!open}
-      >
-        {description}
-        {isResearcher && <CreateGeoModal layerId={_id} />}
-      </div>
-    </li>
   );
 };

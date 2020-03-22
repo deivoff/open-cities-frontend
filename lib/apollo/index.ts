@@ -1,8 +1,8 @@
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 import withApollo from 'next-with-apollo';
-import fetch from 'isomorphic-unfetch'
+import fetch from 'isomorphic-unfetch';
 import { setContext } from 'apollo-link-context';
 
 const GRAPHQL_URL = process.env.NODE_ENV === 'production'
@@ -22,24 +22,23 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      'Authorization': token ? `Bearer ${token}` : "",
-    }
-  }
+      Authorization: token ? `Bearer ${token}` : '',
+    },
+  };
 });
 
 const link = authLink.concat(defaultLink);
 
-export default withApollo(({ initialState }) =>
-    new ApolloClient({
-      name: 'open-cities',
-      link: link,
-      cache: new InMemoryCache()        //  rehydrate the cache using the initial data passed from the server:
-        .restore(initialState || {}),
-      ssrMode: true,
-      defaultOptions: {
-        watchQuery: {
-          fetchPolicy: 'cache-and-network',
-        },
-      }
-    })
-);
+export default withApollo(({ initialState }) => new ApolloClient({
+  name: 'open-cities',
+  link,
+  cache: new InMemoryCache() //  rehydrate the cache using the initial data passed from the server:
+    .restore(initialState || {}),
+  ssrMode: true,
+  connectToDevTools: process.env.NODE_ENV !== 'production',
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+}));

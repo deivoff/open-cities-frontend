@@ -15,13 +15,9 @@
     top: 24px
     right: -12px
 
-    &[aria-expanded="false"]
-      background-color: green
-
-
-  &__list
-    padding-top: 10px
-    font-size: 12px
+  &__header
+    display: flex
+    flex-direction: column
 
   &__title
     text-transform: uppercase
@@ -29,27 +25,7 @@
     font-size: 9px
     opacity: .5
 
-.layer-controller
-  display: flex
-  flex-direction: column
 
-  &__header
-    display: flex
-    align-items: center
-    border-bottom: 1px solid #C8C8C8
-    border-top: 1px solid #C8C8C8
-    padding: 15px
-
-  &__eye
-    margin-left: auto
-    &._visible
-      background-color: blue
-
-  &__body
-    padding-left: 40px
-    transition-duration: .2s
-
-
-    &[aria-hidden="true"]
-      transform: scaleY(0)
-
+  &__list
+    padding-top: 10px
+    font-size: 12px
