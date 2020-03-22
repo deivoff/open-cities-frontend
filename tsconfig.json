@@ -20,23 +20,17 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "$types/*": ["types/*"],
-      "$widgets/*": ["src/widgets/*"],
-      "$static/*": ["src/static/*"],
+      "$HOCs/*": ["src/HOCs/*"],
       "$apollo/*": ["src/apollo/*"],
       "$components/*": ["src/components/*"],
       "$context/*": ["src/context/*"],
-      "$HOCs/*": ["src/HOCs/*"],
       "$hooks/*": ["src/hooks/*"],
-      "$lib/*": ["lib/*"]
+      "$lib/*": ["lib/*"],
+      "$static/*": ["src/static/*"],
+      "$types/*": ["types/*"],
+      "$widgets/*": ["src/widgets/*"]
     }
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

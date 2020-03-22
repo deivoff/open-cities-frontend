@@ -15,6 +15,20 @@ export enum GeometryType {
   Polygon = "Polygon",
 }
 
+export enum UserType {
+  admin = "admin",
+  researcher = "researcher",
+  user = "user",
+}
+
+export interface GeoInputExtended {
+  access: UserType;
+  author: string;
+  geometry: GeometryInput;
+  layer: string;
+  properties: any;
+}
+
 export interface GeometryInput {
   coordinates: any;
   type: GeometryType;

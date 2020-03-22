@@ -11,6 +11,7 @@ export interface CreateLayer_createLayer {
   _id: string;
   name: string;
   description: string;
+  properties: any[];
 }
 
 export interface CreateLayer {
@@ -21,4 +22,5 @@ export interface CreateLayerVariables {
   name: string;
   description: string;
   city: string;
+  properties: any[];
 }

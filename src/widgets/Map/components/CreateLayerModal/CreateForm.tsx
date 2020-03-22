@@ -1,10 +1,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from '$components/layout';
+import CSVLoader from '../CSVLoader';
+import { LayerProperty } from '$types/index';
 
 export type Values = {
   name: string;
   description: string;
+  properties: LayerProperty[];
 }
 
 type Props = {
@@ -16,6 +19,7 @@ export const CreateForm: React.FC<Props> = ({ handlerSubmit }) => {
     initialValues: {
       name: '',
       description: '',
+      properties: [],
     },
     onSubmit: async values => handlerSubmit(values),
   });
@@ -41,6 +45,10 @@ export const CreateForm: React.FC<Props> = ({ handlerSubmit }) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.description}
+      />
+
+      <CSVLoader
+        onDotsNormalize={(data => console.log(data))}
       />
 
       <Button type="submit" style={{ display: 'block' }}>

@@ -66,6 +66,8 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
         });
       });
     }
+
+    return () => { geoGroup.clearLayers(); };
   }, [geoGroup, data]);
 
   useEffect(() => {
@@ -74,6 +76,7 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
     } else {
       geoGroup.removeFrom(map!);
     }
+    return () => { geoGroup.removeFrom(map!); };
   }, [visible, geoGroup, map]);
 
   return (

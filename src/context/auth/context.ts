@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
+import { UserType } from '$types/globalTypes';
 
 export interface AuthContext {
   token: string | null;
@@ -8,7 +9,6 @@ export interface AuthContext {
   logout: () => void;
 }
 
-type UserRole = 'user' | 'researcher' | 'admin';
 export interface User {
   id: string;
   email: string;
@@ -16,7 +16,7 @@ export interface User {
     givenName: string;
     familyName: string;
   };
-  access: UserRole;
+  access: UserType;
   photos: [
     {
       url: string;

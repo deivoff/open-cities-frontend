@@ -648,6 +648,30 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "properties",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "JSON",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -659,6 +683,16 @@
         "kind": "SCALAR",
         "name": "DateTime",
         "description": "The javascript `Date` as string. Type represents date and time as the ISO Date string.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "JSON",
+        "description": "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -905,16 +939,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "JSON",
-        "description": "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "City",
         "description": null,
@@ -1126,6 +1150,45 @@
             "deprecationReason": null
           },
           {
+            "name": "createGeos",
+            "description": null,
+            "args": [
+              {
+                "name": "geoInput",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "GeoInputExtended",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "authGoogle",
             "description": null,
             "args": [
@@ -1206,6 +1269,28 @@
                 "kind": "SCALAR",
                 "name": "String",
                 "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "properties",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "JSON",
+                    "ofType": null
+                  }
+                }
               }
             },
             "defaultValue": null
@@ -1303,6 +1388,97 @@
             "defaultValue": null
           }
         ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "GeoInputExtended",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "geometry",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "GeometryInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "properties",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "layer",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "author",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "access",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "UserType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Boolean",
+        "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "fields": null,
+        "inputFields": null,
         "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
@@ -1675,16 +1851,6 @@
             "deprecationReason": null
           }
         ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "Boolean",
-        "description": "The `Boolean` scalar type represents `true` or `false`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
         "possibleTypes": null
       },
       {

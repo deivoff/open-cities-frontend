@@ -33,6 +33,7 @@
     "next-with-apollo": "^5.0.0",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
+    "react-csv-reader": "^3.0.4",
     "react-dom": "^16.13.0",
     "react-leaflet": "^2.6.1",
     "react-modal": "^3.11.2"
