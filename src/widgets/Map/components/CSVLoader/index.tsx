@@ -1,13 +1,13 @@
 import CSVReader from 'react-csv-reader';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GeoInputExtended, GeometryType, LayerProperty } from '$types/index';
 import { useAuth } from '$context/auth';
 
 type Props = {
   onDotsNormalize: (dots: GeoInputExtended[]) => void
-  layer?: string;
+  layerId: string,
 }
-type LayerPropertyWithGeometry = null | {
+type LayerPropertyWithGeometry = {
   geometry: {
     coordinates: [string, string],
     type: GeometryType;
@@ -15,14 +15,25 @@ type LayerPropertyWithGeometry = null | {
   properties: LayerProperty[];
 }
 
-const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layer }) => {
+const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layerId }) => {
   const [testRow, setTestRow] = useState<any>(null);
+  const [
+    normalizedData,
+    setNormalizedData,
+  ] = useState<GeoInputExtended[] | null>(null);
   const { user } = useAuth();
   const [rows, setRows] = useState<any[]>([]);
 
-  const handlerOnPropertyComplete = (settings: LayerPropertyWithGeometry) => {
-    if (settings && layer) {
-      onDotsNormalize(rows.map(elem => ({
+  useEffect(() => {
+    if (layerId && normalizedData) {
+      onDotsNormalize(normalizedData);
+    }
+  }, [onDotsNormalize, layerId, normalizedData]);
+
+  const handlerOnPropertyComplete = useCallback((settings: LayerPropertyWithGeometry) => {
+    setNormalizedData(rows
+      .filter(elem => elem[settings.geometry.coordinates[0]] && [settings.geometry.coordinates[0]])
+      .map(elem => ({
         geometry: {
           coordinates: [
             elem[settings.geometry.coordinates[0]],
@@ -30,13 +41,14 @@ const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layer }) => {
           ],
           type: settings.geometry.type,
         },
-        properties: {},
+        properties: {
+          type: 'test',
+        },
         access: user!.access,
         author: user!.id,
-        layer,
+        layer: layerId,
       })));
-    }
-  };
+  }, [rows, user, layerId]);
 
   return (
     <>
@@ -68,8 +80,8 @@ type CreateProperties = React.FC<{
 }>
 const CreateProperties: CreateProperties = ({ property, onPropertyComplete }) => {
   const [geometryPaths, setGeometryPaths] = useState<[string, string]>(['', '']);
-  const [type, setType] = useState(GeometryType.Point);
-  const [settings, setSettings] = useState<LayerPropertyWithGeometry>(null);
+  const [type] = useState(GeometryType.Point);
+  const [settings, setSettings] = useState<LayerPropertyWithGeometry | null>(null);
   const isGeometryPathsExist = geometryPaths.every(path => path);
 
   useEffect(() => {
@@ -82,15 +94,21 @@ const CreateProperties: CreateProperties = ({ property, onPropertyComplete }) =>
         setGeometryPaths(prevState => [key, prevState[1]]);
       }
     });
+  }, [property]);
 
-    setSettings({
-      geometry: {
-        coordinates: geometryPaths,
-        type,
-      },
-      properties: [],
-    });
-  }, [setSettings, type, geometryPaths, property]);
+  useEffect(() => {
+    const isPathsExist = geometryPaths.every(path => path);
+
+    if (isPathsExist) {
+      setSettings({
+        geometry: {
+          coordinates: geometryPaths,
+          type,
+        },
+        properties: [],
+      });
+    }
+  }, [type, geometryPaths]);
 
   useEffect(() => {
     if (settings) {

@@ -59,7 +59,7 @@ type Layer {
 type Mutation {
     authGoogle(code: String!): AuthResponse!
     createGeo(geoInput: GeoInput!): Geo!
-    createGeos(geoInput: [GeoInputExtended!]!): Boolean!
+    createGeos(geoInput: [GeoInputExtended!]!): [Geo!]!
     createLayer(layerInput: LayerInput!): Layer!
 }
 

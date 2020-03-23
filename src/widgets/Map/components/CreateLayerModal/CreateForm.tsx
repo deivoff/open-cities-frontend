@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from '$components/layout';
 import CSVLoader from '../CSVLoader';
-import { LayerProperty } from '$types/index';
+import { GeoInputExtended, LayerProperty } from '$types/index';
 
 export type Values = {
   name: string;
@@ -12,9 +12,11 @@ export type Values = {
 
 type Props = {
   handlerSubmit: (values: Values) => void;
+  onGeosComplete: (geos: GeoInputExtended[]) => void;
+  layerId: string;
 }
 
-export const CreateForm: React.FC<Props> = ({ handlerSubmit }) => {
+export const CreateForm: React.FC<Props> = ({ handlerSubmit, onGeosComplete, layerId }) => {
   const formik = useFormik<Values>({
     initialValues: {
       name: '',
@@ -48,7 +50,8 @@ export const CreateForm: React.FC<Props> = ({ handlerSubmit }) => {
       />
 
       <CSVLoader
-        onDotsNormalize={(data => console.log(data))}
+        onDotsNormalize={onGeosComplete}
+        layerId={layerId}
       />
 
       <Button type="submit" style={{ display: 'block' }}>

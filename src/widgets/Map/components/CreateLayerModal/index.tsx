@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { Modal } from '$components/modal';
 import { CreateForm, Values } from './CreateForm';
-import { CREATE_LAYER, CreateLayer, CreateLayerVariables } from '$apollo/mutations';
-import { GET_LAYERS, GetLayers, GetLayersVariables } from '$apollo/queries';
+import {
+  CREATE_LAYER, CreateLayer, CreateLayerVariables,
+  CREATE_GEOS, CreateGeos, CreateGeosVariables,
+} from '$apollo/mutations';
+import {
+  GET_GEOS, GET_LAYERS, GetGeos, GetGeosVariables, GetLayers, GetLayersVariables,
+} from '$apollo/queries';
 import { IconButton } from '$components/layout';
+import { GeoInputExtended } from '$types/globalTypes';
 
 interface CreateLayerProps {
   city: string;
@@ -32,10 +38,54 @@ const useCreateLayerMutation = (
   },
 });
 
+const useCreateGeosMutation = (
+  layerId: string,
+) => useMutation<CreateGeos, CreateGeosVariables>(CREATE_GEOS, {
+  update: (cache, { data }) => {
+    if (layerId) {
+      const options = {
+        query: GET_GEOS,
+        variables: {
+          layerId,
+        },
+      };
+
+      const returnedGeos = data!.createGeos;
+      const cachedGeos = cache.readQuery<GetGeos, GetGeosVariables>(options) || { geos: [] };
+
+      cache.writeQuery<GetGeos, GetGeosVariables>({
+        ...options,
+        data: {
+          geos: [...cachedGeos.geos, ...returnedGeos],
+        },
+      });
+    }
+  },
+});
+
 
 const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [createLayer] = useCreateLayerMutation(city);
+  const [geos, setGeos] = useState<GeoInputExtended[]>([]);
+  const [layerId, setLayerId] = useState('');
+  const [createLayer, { data }] = useCreateLayerMutation(city);
+  const [createGeos] = useCreateGeosMutation(layerId);
+
+  useEffect(() => {
+    if (data) {
+      setLayerId(data.createLayer._id);
+    }
+  }, [data, setLayerId]);
+
+  useEffect(() => {
+    if (layerId) {
+      createGeos({
+        variables: {
+          geos,
+        },
+      });
+    }
+  }, [createGeos, layerId, geos]);
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -45,12 +95,14 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
     setModalOpen(false);
   };
 
-  const handlerSubmit = (values: Values) => createLayer({
-    variables: {
-      ...values,
-      city,
-    },
-  });
+  const handlerSubmit = (values: Values) => {
+    createLayer({
+      variables: {
+        ...values,
+        city,
+      },
+    });
+  };
 
   return (
     <>
@@ -58,7 +110,11 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
         Добавить слой
       </IconButton>
       <Modal isOpen={isModalOpen} onRequestClose={closeModalHandler} shouldCloseOnOverlayClick>
-        <CreateForm handlerSubmit={handlerSubmit} />
+        <CreateForm
+          handlerSubmit={handlerSubmit}
+          onGeosComplete={geosFromCSV => setGeos(geosFromCSV)}
+          layerId={layerId}
+        />
       </Modal>
     </>
   );
