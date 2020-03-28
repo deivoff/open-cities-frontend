@@ -17,7 +17,7 @@ export const Button: Button = ({
   <button
     className={cn(
       css.button,
-      css[`$_${theme}`],
+      css[`_${theme}`],
       className,
     )}
     type={type}

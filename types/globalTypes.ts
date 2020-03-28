@@ -6,6 +6,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AccessType {
+  city = "city",
+  default = "default",
+}
+
 export enum GeometryType {
   LineString = "LineString",
   MultiLineString = "MultiLineString",
@@ -21,9 +26,7 @@ export enum UserType {
   user = "user",
 }
 
-export interface GeoInputExtended {
-  access: UserType;
-  author: string;
+export interface GeoInput {
   geometry: GeometryInput;
   layer: string;
   properties: any;
@@ -32,6 +35,17 @@ export interface GeoInputExtended {
 export interface GeometryInput {
   coordinates: any;
   type: GeometryType;
+}
+
+export interface MapInput {
+  description: string;
+  name: string;
+  settings: MapSettingInput;
+}
+
+export interface MapSettingInput {
+  bbox: any[];
+  zoom: number;
 }
 
 //==============================================================

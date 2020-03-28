@@ -1,84 +1,56 @@
 import React, { useState, MouseEvent, useContext } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import {
+  useApolloClient, useMutation, useQuery,
+} from '@apollo/react-hooks';
 import {
   Button, GoogleButton, Modal, Spiner,
 } from '$components/index';
+import * as Nav from './components/Nav';
 import {
   GET_GOOGLE_REDIRECT_URL,
   GET_CITIES,
-  GetCities,
+  GetCities, GetGoogleRedirectURL,
 } from '$apollo/queries';
-import { AUTH_GOOGLE } from '$apollo/mutations';
+import { AUTH_GOOGLE, AuthGoogle, AuthGoogleVariables } from '$apollo/mutations';
 import { AuthContext, User } from '$context/auth';
 
 import s from './Header.module.sass';
 // const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
 const CitiesList: React.FC = () => {
-  const { data, loading: citiesLoading, error: citiesError } = useQuery<GetCities>(GET_CITIES);
+  const { data, loading, error } = useQuery<GetCities>(GET_CITIES);
 
-  if (citiesLoading || citiesError || !data) return null;
+  if (loading || error || !data) return null;
 
   const { cities } = data;
 
   return (
-    <div className={cn(s['nav__dropdown'])}>
-      <ul className={cn(s['nav__list'])}>
+    <Nav.Dropdown>
+      <Nav.List>
         {cities
           ? cities.map(({ name, url }) => (
-            <li className={cn(s['nav__elem'])} key={name}>
-              <Link href="[city]" as={`${url}`}>
+            <Nav.Elem key={name}>
+              <Link href="/city/[city]" as={`/city/${url}`}>
                 <a>
                   {name}
                 </a>
               </Link>
-            </li>
+            </Nav.Elem>
           ))
           : null}
-      </ul>
-    </div>
+      </Nav.List>
+    </Nav.Dropdown>
   );
 };
 
-interface Profile {
-  user: User;
-  logout: () => void;
-}
-const Profile: React.FC<Profile> = ({ user: { name, photos }, logout }) => (
-  <div className={s['nav__profile']}>
-    <div className={cn(s['nav__elem'], s['_dropdown'])}>
-      {name ? `${name.givenName} ${name.familyName}` : null}
-      <div className={cn(s['nav__dropdown'], s['_profile'])}>
-        <ul className={cn(s['nav__list'], s['_profile'])}>
-          <li className={s['nav__elem']}>
-            <Link href="/profile"><a>Мой профиль</a></Link>
-          </li>
-          <li className={s['nav__elem']}>
-            <Link href="/maps"><a>Мои карты</a></Link>
-          </li>
-          <li className={s['nav__elem']}>
-            <Link href="/researches"><a>Мои исследования</a></Link>
-          </li>
-          <li className={s['nav__elem']} onClick={logout}>
-            Выйти
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div className={s['nav__photo']}>
-      <img
-        alt="User thimbnail"
-        src={photos ? (photos[photos.length - 1].url ? photos[photos.length - 1].url : '') : ''}
-      />
-    </div>
-  </div>
-);
-
-export const Header: React.FC = () => {
+const Profile: React.FC = () => {
   const [isAuthModalOpen, setAuthModal] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
+  const [
+    authGoogle,
+  ] = useMutation<AuthGoogle, AuthGoogleVariables>(AUTH_GOOGLE);
 
   const {
     token, user, login, logout,
@@ -99,12 +71,20 @@ export const Header: React.FC = () => {
 
     async function authHandler(this: Window, event: MessageEvent) {
       // 'this' = children window
+      if ((/^react-devtools/gi).test(event?.data?.source)) {
+        return;
+      }
+
+      // eslint-disable-next-line react/no-this-in-sfc
       this.close();
+      const { code } = event.data.payload;
       window.removeEventListener('message', authHandler);
-      const code = event.data;
 
       try {
-        const { data } = await apolloClient.mutate({ mutation: AUTH_GOOGLE, variables: { code } });
+        const { data, errors } = await authGoogle({ variables: { code } });
+
+        if (errors || !data) return;
+
         const { token: responseToken } = data.authGoogle;
         login(responseToken);
       } catch (error) {
@@ -117,7 +97,10 @@ export const Header: React.FC = () => {
     }
 
     try {
-      const { data } = await apolloClient.query({ query: GET_GOOGLE_REDIRECT_URL });
+      const { data } = await apolloClient.query<GetGoogleRedirectURL>({
+        query: GET_GOOGLE_REDIRECT_URL,
+      });
+
       const { url } = data.getGoogleOAuthRedirect;
       const loginWindow = window.open(url, 'OAuth')!;
 
@@ -127,38 +110,17 @@ export const Header: React.FC = () => {
       throw error;
     }
   };
-  return (
-    <header className={cn(s.header)}>
-      <Link href="/">
-        <a className={s.logo}>Открытые города</a>
-      </Link>
-      <button type="button" className={s['nav__button']}>
-        <span />
-        <span />
-        <span />
-      </button>
-      <nav className={s.nav}>
-        <ul className={cn(s['nav__list'])}>
-          <li className={cn(s['nav__elem'])}>
-            <Link href="/about"><a>О проекте</a></Link>
-          </li>
-          <li className={cn(s['nav__elem'])}>
-            <Link href="/research"><a>Исследования</a></Link>
-          </li>
-          <li className={cn(s['nav__elem'], s['_dropdown'])}>
-            Города
-            <CitiesList />
-          </li>
-        </ul>
-        {authLoading ? (
-          <div className={s['nav__spiner']}>
-            <Spiner />
-          </div>
-        ) : token && user ? (
-          <Profile user={user} logout={logout} />
-        ) : (
-          <Button onClick={openModalHandler}>Войти</Button>
-        )}
+
+  if (authLoading) {
+    return (
+      <Nav.Spiner />
+    );
+  }
+
+  if (!token || !user) {
+    return (
+      <>
+        <Button onClick={openModalHandler} theme="success">Войти</Button>
         <Modal
           isOpen={isAuthModalOpen}
           onRequestClose={closeModalHandler}
@@ -174,7 +136,64 @@ export const Header: React.FC = () => {
             </>
           )}
         </Modal>
-      </nav>
-    </header>
+      </>
+    );
+  }
+
+  const { name, photos, id } = user;
+  let avatar = '';
+
+  if (photos) {
+    if (photos[photos.length - 1].url) {
+      avatar = photos[photos.length - 1].url;
+    }
+  }
+  return (
+    <Nav.Profile>
+      <Nav.Elem type="dropdown">
+        {name ? `${name.givenName} ${name.familyName}` : null}
+        <Nav.Dropdown type="profile">
+          <Nav.List type="profile">
+            <Nav.Elem>
+              <Link href="/[user]" as={`/${id}`}><a>Мой профиль</a></Link>
+            </Nav.Elem>
+            <Nav.Elem>
+              <Link href="/[user]/maps" as={`/${id}/maps`}><a>Мои карты</a></Link>
+            </Nav.Elem>
+            <Nav.Elem>
+              <Link href="/[user]/researches" as={`/${id}/researches`}><a>Мои исследования</a></Link>
+            </Nav.Elem>
+            <Nav.Elem onClick={logout}>
+              Выйти
+            </Nav.Elem>
+          </Nav.List>
+        </Nav.Dropdown>
+      </Nav.Elem>
+      <Nav.Avatar src={avatar} />
+    </Nav.Profile>
   );
 };
+
+export const Header: React.FC = () => (
+  <header className={cn(s.header)}>
+    <Link href="/">
+      <a className={s.logo}>Открытые города</a>
+    </Link>
+    <Nav.Button />
+    <Nav.Root>
+      <Nav.List>
+        <Nav.Elem>
+          <Link href="/about"><a>О проекте</a></Link>
+        </Nav.Elem>
+        <Nav.Elem>
+          <Link href="/researches"><a>Исследования</a></Link>
+        </Nav.Elem>
+        <Nav.Elem type="dropdown">
+          Города
+          <CitiesList />
+        </Nav.Elem>
+      </Nav.List>
+      <Profile />
+    </Nav.Root>
+  </header>
+);

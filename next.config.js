@@ -17,7 +17,16 @@ const getTsAliases = (tsconfigPath = './tsconfig.json') => {
 
 
 module.exports = withSass({
-  webpack: (config, options) => {
+  webpack: (config) => {
+    
+    // add graphql
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
+    });
+    
+    // resolve aliases
     config.resolve.alias = {
       ...config.resolve.alias,
       ...getTsAliases()

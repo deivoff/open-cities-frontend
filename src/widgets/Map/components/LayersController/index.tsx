@@ -3,9 +3,8 @@ import { useQuery } from '@apollo/react-hooks';
 import useToggle from '$hooks/useToggle';
 import { IconButton } from '$components/index';
 import { useAuth } from '$context/auth';
-import {
-  GET_LAYERS, GetLayers, GetLayersVariables,
-} from '$apollo/queries';
+import { GET_LAYERS, GetLayers, GetLayersVariables } from '$apollo/queries';
+import { UserType } from '$types/globalTypes';
 import Layer from './Layer';
 import CreateLayerModal from '../CreateLayerModal';
 
@@ -26,7 +25,7 @@ export const LayersController: LayersController = ({ city }) => {
 
   if (layersError) return null;
   if (layersLoading || !layersData) return null;
-  const isResearcher = user?.access !== 'user';
+  const isResearcher = user?.access !== UserType.user;
 
   return (
     <div

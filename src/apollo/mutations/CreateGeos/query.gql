@@ -1,0 +1,10 @@
+mutation CreateGeos($geos: [GeoInput!]!) {
+    createGeos(geoInput: $geos) {
+        _id
+        geometry {
+            type
+            coordinates
+        }
+        properties
+    }
+}

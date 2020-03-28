@@ -5,6 +5,23 @@ schema {
     mutation: Mutation
 }
 
+type Access {
+    comment: AccessSettings!
+    coowner: AccessSettingsCoowner!
+    edit: AccessSettings!
+    view: AccessSettings!
+}
+
+type AccessSettings {
+    anyone: Boolean
+    group: [User!]
+    role: UserType
+}
+
+type AccessSettingsCoowner {
+    group: [User!]
+}
+
 type AuthRedirect {
     url: String!
 }
@@ -15,16 +32,15 @@ type AuthResponse {
 
 type City {
     _id: ID!
-    center: GeometryCoords!
+    map: Map!
     name: String!
     photo: String!
     url: String!
-    zoom: Int!
 }
 
 type Geo {
     _id: ID!
-    access: UserType!
+    access: Access!
     author: User!
     createdAt: DateTime!
     geometry: Geometry!
@@ -45,31 +61,49 @@ type GoogleProvider {
 
 type Layer {
     _id: ID!
-    access: UserType!
-    city: String!
+    access: Access!
     createdAt: DateTime!
     description: String!
     name: String!
     owner: User!
-    properties: [JSON!]!
-    subscribers: [User!]!
+    settings: [JSON!]!
     updatedAt: DateTime!
+}
+
+type Map {
+    _id: ID!
+    access: Access!
+    createdAt: DateTime!
+    description: String!
+    draft: Boolean!
+    layers: [Layer!]!
+    name: String!
+    owner: User!
+    settings: MapSettings!
+    updatedAt: DateTime!
+}
+
+type MapSettings {
+    bbox: [GeometryCoords!]!
+    zoom: Int!
 }
 
 type Mutation {
     authGoogle(code: String!): AuthResponse!
     createGeo(geoInput: GeoInput!): Geo!
-    createGeos(geoInput: [GeoInputExtended!]!): [Geo!]!
+    createGeos(geoInput: [GeoInput!]!): [Geo!]!
     createLayer(layerInput: LayerInput!): Layer!
+    createMap(mapInput: MapInput!, type: AccessType): Map!
 }
 
 type Query {
     cities: [City!]!
+    city(url: String!): City
     geos(layerId: ID!): [Geo!]!
-    getCity(url: String!): City
     getGoogleOAuthRedirect: AuthRedirect!
     getUsers: [User!]!
-    layers(city: String!): [Layer!]!
+    layers(mapId: String!): [Layer!]!
+    maps(userId: String!): [Map!]!
 }
 
 type User {
@@ -94,6 +128,11 @@ type UserSocial {
     googleProvider: GoogleProvider!
 }
 
+enum AccessType {
+    city
+    default
+}
+
 enum GeometryType {
     LineString
     MultiLineString
@@ -115,14 +154,6 @@ input GeoInput {
     properties: JSON!
 }
 
-input GeoInputExtended {
-    access: UserType!
-    author: ID!
-    geometry: GeometryInput!
-    layer: ID!
-    properties: JSON!
-}
-
 input GeometryInput {
     coordinates: GeometryCoords!
     type: GeometryType!
@@ -133,6 +164,17 @@ input LayerInput {
     description: String!
     name: String!
     properties: [JSON!]!
+}
+
+input MapInput {
+    description: String!
+    name: String!
+    settings: MapSettingInput!
+}
+
+input MapSettingInput {
+    bbox: [GeometryCoords!]!
+    zoom: Int!
 }
 
 

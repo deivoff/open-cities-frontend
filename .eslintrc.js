@@ -61,7 +61,12 @@ module.exports = {
         "indent": ["error", 2],
         "dot-notation": [0],
         "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-        "camelcase": [0]
+        "camelcase": [0],
+        "jsx-a11y/anchor-is-valid": [ "error", {
+            "components": [ "Link" ],
+            "specialLink": [ "hrefLeft", "hrefRight" ],
+            "aspects": [ "invalidHref", "preferButton" ]
+        }],
     },
     settings:  {
         "react":  {

@@ -1,0 +1,10 @@
+query GetGeos($layerId: ID!)  {
+    geos(layerId: $layerId) {
+        _id
+        geometry {
+            type
+            coordinates
+        }
+        properties
+    }
+}

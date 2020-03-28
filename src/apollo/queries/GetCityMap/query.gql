@@ -1,0 +1,17 @@
+#import "../../fragments/AccessFragment/query.gql"
+
+query GetCityMap($url: String!) {
+    city(url: $url) {
+        map {
+            layers {
+                name
+                description
+                settings
+            }
+            access {
+                ...AccessFragment
+            }
+        }
+
+    }
+}

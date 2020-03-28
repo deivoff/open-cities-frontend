@@ -1,0 +1,9 @@
+query GetCities {
+    cities {
+        name
+        url
+        map {
+            _id
+        }
+    }
+}

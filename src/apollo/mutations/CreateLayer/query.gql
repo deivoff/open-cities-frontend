@@ -1,0 +1,8 @@
+mutation CreateLayer($name: String!, $description: String!, $city: String!, $properties: [JSON!]!) {
+    createLayer(layerInput: { name: $name, description: $description, city: $city properties: $properties}) {
+        _id
+        name
+        description
+        settings
+    }
+}

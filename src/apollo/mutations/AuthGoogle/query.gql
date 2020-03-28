@@ -1,0 +1,5 @@
+mutation AuthGoogle($code: String!) {
+    authGoogle(code: $code) {
+        token
+    }
+}

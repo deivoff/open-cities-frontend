@@ -1,0 +1,13 @@
+#import "../AccessSettings/query.gql"
+
+fragment AccessFragment on Access {
+    view {
+        ...AccessSettings
+    }
+    comment {
+        ...AccessSettings
+    }
+    edit {
+        ...AccessSettings
+    }
+}

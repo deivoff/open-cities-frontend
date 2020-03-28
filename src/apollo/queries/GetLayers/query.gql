@@ -1,0 +1,8 @@
+query GetLayers($mapId: String!) {
+    layers(mapId: $mapId) {
+        _id
+        name
+        description
+        settings
+    }
+}

@@ -1,0 +1,7 @@
+fragment AccessSettings on AccessSettings {
+    role
+    group {
+        _id
+    }
+    anyone
+}

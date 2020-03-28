@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from '$components/layout';
 import CSVLoader from '../CSVLoader';
-import { GeoInputExtended, LayerProperty } from '$types/index';
+import { GeoInput, LayerProperty } from '$types/index';
 
 export type Values = {
   name: string;
@@ -12,7 +12,7 @@ export type Values = {
 
 type Props = {
   handlerSubmit: (values: Values) => void;
-  onGeosComplete: (geos: GeoInputExtended[]) => void;
+  onGeosComplete: (geos: GeoInput[]) => void;
   layerId: string;
 }
 

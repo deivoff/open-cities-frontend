@@ -28,6 +28,7 @@
       "$lib/*": ["lib/*"],
       "$static/*": ["src/static/*"],
       "$types/*": ["types/*"],
+      "$utils/*": ["src/utils/*"],
       "$widgets/*": ["src/widgets/*"]
     }
   },

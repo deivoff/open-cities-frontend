@@ -1,10 +1,10 @@
 import CSVReader from 'react-csv-reader';
 import React, { useCallback, useEffect, useState } from 'react';
-import { GeoInputExtended, GeometryType, LayerProperty } from '$types/index';
+import { GeoInput, GeometryType, LayerProperty } from '$types/index';
 import { useAuth } from '$context/auth';
 
 type Props = {
-  onDotsNormalize: (dots: GeoInputExtended[]) => void
+  onDotsNormalize: (dots: GeoInput[]) => void
   layerId: string,
 }
 type LayerPropertyWithGeometry = {
@@ -20,7 +20,7 @@ const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layerId }) => {
   const [
     normalizedData,
     setNormalizedData,
-  ] = useState<GeoInputExtended[] | null>(null);
+  ] = useState<GeoInput[] | null>(null);
   const { user } = useAuth();
   const [rows, setRows] = useState<any[]>([]);
 
@@ -44,11 +44,9 @@ const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layerId }) => {
         properties: {
           type: 'test',
         },
-        access: user!.access,
-        author: user!.id,
         layer: layerId,
       })));
-  }, [rows, user, layerId]);
+  }, [rows, layerId]);
 
   return (
     <>
