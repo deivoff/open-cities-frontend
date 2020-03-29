@@ -1,5 +1,5 @@
-mutation CreateLayer($name: String!, $description: String!, $city: String!, $properties: [JSON!]!) {
-    createLayer(layerInput: { name: $name, description: $description, city: $city properties: $properties}) {
+mutation CreateLayer($name: String!, $description: String!, $properties: [JSON!]!, $mapId: ID!) {
+    createLayer(layerInput: { name: $name, description: $description, properties: $properties}, mapId: $mapId) {
         _id
         name
         description

@@ -120,7 +120,7 @@ const Profile: React.FC = () => {
   if (!token || !user) {
     return (
       <>
-        <Button onClick={openModalHandler} theme="success">Войти</Button>
+        <Button onClick={openModalHandler} theme="main-green">Войти</Button>
         <Modal
           isOpen={isAuthModalOpen}
           onRequestClose={closeModalHandler}

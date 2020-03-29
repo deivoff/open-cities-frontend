@@ -29,7 +29,7 @@ export enum UserType {
 export interface GeoInput {
   geometry: GeometryInput;
   layer: string;
-  properties: any;
+  settings: any;
 }
 
 export interface GeometryInput {

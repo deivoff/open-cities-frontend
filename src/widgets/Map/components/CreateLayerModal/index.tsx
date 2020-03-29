@@ -16,9 +16,7 @@ interface CreateLayerProps {
   mapId: string;
 }
 
-const useCreateLayerMutation = (
-  mapId: string,
-) => useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER, {
+const useCreateLayerMutation = () => useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER, {
   // update: (cache, { data }) => {
   //   const options = {
   //     query: GET_LAYERS,
@@ -68,14 +66,14 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ mapId }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [geos, setGeos] = useState<GeoInput[]>([]);
   const [layerId, setLayerId] = useState('');
-  // const [createLayer, { data }] = useCreateLayerMutation(city);
+  const [createLayer, { data }] = useCreateLayerMutation();
   const [createGeos] = useCreateGeosMutation(layerId);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setLayerId(data.createLayer._id);
-  //   }
-  // }, [data, setLayerId]);
+  useEffect(() => {
+    if (data) {
+      setLayerId(data.createLayer._id);
+    }
+  }, [data, setLayerId]);
 
   useEffect(() => {
     if (layerId) {
@@ -96,19 +94,19 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ mapId }) => {
   };
 
   const handlerSubmit = (values: Values) => {
-    // createLayer({
-    //   variables: {
-    //     ...values,
-    //     city,
-    //   },
-    // });
+    createLayer({
+      variables: {
+        ...values,
+        mapId,
+      },
+    });
   };
 
   return (
     <>
       <IconButton
         icon="Plus"
-        theme="info"
+        theme="main-blue"
         onClick={openModalHandler}
         type="button"
       >

@@ -1,10 +1,10 @@
-mutation CreateGeo($geometry: GeometryInput!, $properties: JSON!, $layer: ID!) {
-    createGeo(geoInput: {geometry: $geometry, properties: $properties, layer: $layer}) {
+mutation CreateGeo($geometry: GeometryInput!, $settings: JSON!, $layer: ID!) {
+    createGeo(geoInput: {geometry: $geometry, settings: $settings, layer: $layer}) {
         _id
         geometry {
             type
             coordinates
         }
-        properties
+        settings
     }
 }

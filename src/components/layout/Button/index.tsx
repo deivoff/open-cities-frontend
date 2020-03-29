@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 import css from './Button.module.sass';
 
-type Theme = 'success' | 'white' | 'google' | 'info' | 'disabled';
+type Theme = 'main-green' | 'white' | 'google' | 'main-blue' | 'disabled';
 type DefaultProps<T = {}> = React.ButtonHTMLAttributes<{}> & T;
 
 type Button = React.FC<DefaultProps<{
@@ -13,7 +13,7 @@ type Button = React.FC<DefaultProps<{
 export const Button: Button = ({
   type = 'button',
   className,
-  theme = 'success',
+  theme = 'main-green',
   ...rest
 }) => (
   <button

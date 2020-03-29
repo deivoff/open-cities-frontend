@@ -29,13 +29,14 @@ const MapPage: NextPage = () => {
 
   if (!city) return <Error statusCode={404}>Такого города у нас нет :с</Error>;
 
-  const { map } = city;
+  const { map, name } = city;
   return (
     <>
       <Head>
         <title>
           Открытые города |
-          name
+          {' '}
+          {name}
         </title>
       </Head>
       <Page.Map>

@@ -14,6 +14,10 @@
     position: absolute
     top: 24px
     right: -12px
+    transition-duration: .3s
+    &[aria-expanded="false"]
+      right: -45px
+      transform: rotate(180deg) scale(1.5)
 
   &__header
     display: flex

@@ -2,12 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Button } from '$components/layout';
 import CSVLoader from '../CSVLoader';
-import { GeoInput, LayerProperty } from '$types/index';
+import { GeoInput, LayerSettings } from '$types/index';
 
 export type Values = {
   name: string;
   description: string;
-  properties: LayerProperty[];
+  settings: LayerSettings;
 }
 
 type Props = {
@@ -21,7 +21,7 @@ export const CreateForm: React.FC<Props> = ({ handlerSubmit, onGeosComplete, lay
     initialValues: {
       name: '',
       description: '',
-      properties: [],
+      settings: {},
     },
     onSubmit: async values => handlerSubmit(values),
   });

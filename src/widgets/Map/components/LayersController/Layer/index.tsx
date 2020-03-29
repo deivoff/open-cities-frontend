@@ -61,7 +61,7 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
       <IconButton
         icon="Eye"
         onClick={handlerVisible}
-        theme={visible ? 'info' : 'disabled'}
+        theme={visible ? 'main-blue' : 'disabled'}
         className={cn(css['layer-controller__eye'])}
       />
     );

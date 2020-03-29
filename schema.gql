@@ -45,7 +45,8 @@ type Geo {
     createdAt: DateTime!
     geometry: Geometry!
     layer: Layer!
-    properties: JSON!
+    owner: User!
+    settings: JSON!
     updatedAt: DateTime!
 }
 
@@ -92,7 +93,7 @@ type Mutation {
     authGoogle(code: String!): AuthResponse!
     createGeo(geoInput: GeoInput!): Geo!
     createGeos(geoInput: [GeoInput!]!): [Geo!]!
-    createLayer(layerInput: LayerInput!): Layer!
+    createLayer(layerInput: LayerInput!, mapId: ID!): Layer!
     createMap(mapInput: MapInput!, type: AccessType): Map!
 }
 
@@ -152,7 +153,7 @@ enum UserType {
 input GeoInput {
     geometry: GeometryInput!
     layer: ID!
-    properties: JSON!
+    settings: JSON!
 }
 
 input GeometryInput {
@@ -161,7 +162,6 @@ input GeometryInput {
 }
 
 input LayerInput {
-    city: String!
     description: String!
     name: String!
     properties: [JSON!]!

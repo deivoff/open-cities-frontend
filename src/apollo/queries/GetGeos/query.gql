@@ -5,6 +5,6 @@ query GetGeos($layerId: ID!)  {
             type
             coordinates
         }
-        properties
+        settings
     }
 }

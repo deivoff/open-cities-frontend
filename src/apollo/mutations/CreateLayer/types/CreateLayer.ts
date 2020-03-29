@@ -21,6 +21,6 @@ export interface CreateLayer {
 export interface CreateLayerVariables {
   name: string;
   description: string;
-  city: string;
   properties: any[];
+  mapId: string;
 }

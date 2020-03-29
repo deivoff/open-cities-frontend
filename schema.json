@@ -950,7 +950,7 @@
             "deprecationReason": null
           },
           {
-            "name": "author",
+            "name": "owner",
             "description": null,
             "args": [],
             "type": {
@@ -1014,7 +1014,7 @@
             "deprecationReason": null
           },
           {
-            "name": "properties",
+            "name": "settings",
             "description": null,
             "args": [],
             "type": {
@@ -1023,6 +1023,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "JSON",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "author",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
                 "ofType": null
               }
             },
@@ -1503,6 +1519,20 @@
             "description": null,
             "args": [
               {
+                "name": "mapId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
                 "name": "layerInput",
                 "description": null,
                 "type": {
@@ -1720,20 +1750,6 @@
             "defaultValue": null
           },
           {
-            "name": "city",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null
-          },
-          {
             "name": "properties",
             "description": null,
             "type": {
@@ -1781,7 +1797,7 @@
             "defaultValue": null
           },
           {
-            "name": "properties",
+            "name": "settings",
             "description": null,
             "type": {
               "kind": "NON_NULL",

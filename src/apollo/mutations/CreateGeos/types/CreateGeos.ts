@@ -18,7 +18,7 @@ export interface CreateGeos_createGeos {
   __typename: "Geo";
   _id: string;
   geometry: CreateGeos_createGeos_geometry;
-  properties: any;
+  settings: any;
 }
 
 export interface CreateGeos {

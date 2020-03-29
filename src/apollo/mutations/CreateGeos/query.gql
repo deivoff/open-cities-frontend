@@ -5,6 +5,6 @@ mutation CreateGeos($geos: [GeoInput!]!) {
             type
             coordinates
         }
-        properties
+        settings
     }
 }

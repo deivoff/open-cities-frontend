@@ -9,7 +9,7 @@ type Props = {
 }
 export type Values = {
   geometry: Pick<CreateGeo['createGeo']['geometry'], 'type' | 'coordinates'>,
-  properties: {
+  settings: {
     [key in string]: any;
   }
 }
@@ -20,7 +20,7 @@ export const CreateForm: React.FC<Props> = (({ handlerSubmit }) => {
         type: GeometryType.Point,
         coordinates: [65.5152054, 57.1668968],
       },
-      properties: {},
+      settings: {},
     },
     onSubmit: async values => handlerSubmit(values),
   });
@@ -46,7 +46,7 @@ export const CreateForm: React.FC<Props> = (({ handlerSubmit }) => {
         name="properties.test"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.properties.test}
+        value={formik.values.settings.test}
       />
       <Button type="submit" style={{ display: 'block' }}>
         Отправить

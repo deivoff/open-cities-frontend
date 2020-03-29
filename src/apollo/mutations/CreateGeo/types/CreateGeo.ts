@@ -18,7 +18,7 @@ export interface CreateGeo_createGeo {
   __typename: "Geo";
   _id: string;
   geometry: CreateGeo_createGeo_geometry;
-  properties: any;
+  settings: any;
 }
 
 export interface CreateGeo {
@@ -27,6 +27,6 @@ export interface CreateGeo {
 
 export interface CreateGeoVariables {
   geometry: GeometryInput;
-  properties: any;
+  settings: any;
   layer: string;
 }
