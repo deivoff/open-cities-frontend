@@ -7,35 +7,35 @@ import {
   CREATE_GEOS, CreateGeos, CreateGeosVariables,
 } from '$apollo/mutations';
 import {
-  GET_GEOS, GET_LAYERS, GetGeos, GetGeosVariables, GetLayers, GetLayersVariables,
+  GET_GEOS, GetGeos, GetGeosVariables,
 } from '$apollo/queries';
 import { IconButton } from '$components/layout';
-import { GeoInputExtended } from '$types/globalTypes';
+import { GeoInput } from '$types/globalTypes';
 
 interface CreateLayerProps {
-  city: string;
+  mapId: string;
 }
 
 const useCreateLayerMutation = (
-  city: string,
+  mapId: string,
 ) => useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER, {
-  update: (cache, { data }) => {
-    const options = {
-      query: GET_LAYERS,
-      variables: {
-        city,
-      },
-    };
-
-    const returnedLayer = data!.createLayer;
-    const cashedLayers = cache.readQuery<GetLayers, GetLayersVariables>(options);
-    cache.writeQuery<GetLayers, GetLayersVariables>({
-      ...options,
-      data: {
-        layers: [...cashedLayers!.layers, returnedLayer],
-      },
-    });
-  },
+  // update: (cache, { data }) => {
+  //   const options = {
+  //     query: GET_LAYERS,
+  //     variables: {
+  //       city,
+  //     },
+  //   };
+  //
+  //   const returnedLayer = data!.createLayer;
+  //   const cashedLayers = cache.readQuery<GetLayers, GetLayersVariables>(options);
+  //   cache.writeQuery<GetLayers, GetLayersVariables>({
+  //     ...options,
+  //     data: {
+  //       layers: [...cashedLayers!.layers, returnedLayer],
+  //     },
+  //   });
+  // },
 });
 
 const useCreateGeosMutation = (
@@ -64,18 +64,18 @@ const useCreateGeosMutation = (
 });
 
 
-const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
+const CreateLayerModal: React.FC<CreateLayerProps> = ({ mapId }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [geos, setGeos] = useState<GeoInputExtended[]>([]);
+  const [geos, setGeos] = useState<GeoInput[]>([]);
   const [layerId, setLayerId] = useState('');
-  const [createLayer, { data }] = useCreateLayerMutation(city);
+  // const [createLayer, { data }] = useCreateLayerMutation(city);
   const [createGeos] = useCreateGeosMutation(layerId);
 
-  useEffect(() => {
-    if (data) {
-      setLayerId(data.createLayer._id);
-    }
-  }, [data, setLayerId]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setLayerId(data.createLayer._id);
+  //   }
+  // }, [data, setLayerId]);
 
   useEffect(() => {
     if (layerId) {
@@ -96,12 +96,12 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ city }) => {
   };
 
   const handlerSubmit = (values: Values) => {
-    createLayer({
-      variables: {
-        ...values,
-        city,
-      },
-    });
+    // createLayer({
+    //   variables: {
+    //     ...values,
+    //     city,
+    //   },
+    // });
   };
 
   return (

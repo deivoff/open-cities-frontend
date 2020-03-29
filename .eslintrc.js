@@ -47,17 +47,17 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/interface-name-prefix": 0,
         "graphql/template-strings": ['error', {
-            env: 'apollo',
-            tagName: 'FirstGQL',
+            env: 'literal',
+            tagName: 'OpenCities',
             validators: 'all',
+            schemaJson,
+        }],
+        "graphql/named-operations": ['warn', {
             schemaJson,
         }],
         "arrow-parens": ["error", "as-needed"],
         "import/extensions": [2, "never"],
         "import/prefer-default-export": "off",
-        "graphql/named-operations": ['warn', {
-            schemaJson,
-        }],
         "indent": ["error", 2],
         "dot-notation": [0],
         "no-underscore-dangle": ["error", { "allow": ["_id"] }],

@@ -1,0 +1,14 @@
+#import "../../fragments/AccessFragment/query.gql"
+
+query GetMap($id: String!) {
+    map(id: $id) {
+        layers {
+            name
+            description
+            settings
+        }
+        access {
+            ...AccessFragment
+        }
+    }
+}

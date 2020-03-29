@@ -1,20 +1,35 @@
-import { Map as LeafletMap, TileLayer, ZoomControl } from 'react-leaflet';
+import {
+  Map as LeafletMap, TileLayer, ZoomControl,
+} from 'react-leaflet';
 import React from 'react';
+import { latLngBounds } from 'leaflet';
+import { Position } from '$types/index';
 import * as MapComponents from './components';
 
 interface MapProps {
-  city: string;
-  center: [number, number];
-  zoom: number;
+  map: {
+    name: string;
+    description: string;
+    settings: {
+      bbox: Position[]
+      zoom: number;
+    },
+    layers: React.ComponentProps<MapComponents.LayersController>['layers']
+    _id: any;
+  }
 }
 
 const Map: React.FC<MapProps> = ({
-  center,
-  zoom,
-  city,
+  map: {
+    settings: {
+      zoom, bbox,
+    },
+    layers,
+    _id,
+  },
 }) => (
   <LeafletMap
-    center={center}
+    center={latLngBounds(bbox).getCenter()}
     zoom={zoom}
     style={{
       height: 'calc(100vh - var(--header-height))',
@@ -22,7 +37,7 @@ const Map: React.FC<MapProps> = ({
     zoomControl={false}
   >
     <MapComponents.Control position="topleft">
-      <MapComponents.LayersController city={city} />
+      <MapComponents.LayersController layers={layers} mapId={_id} />
     </MapComponents.Control>
     <TileLayer
       url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

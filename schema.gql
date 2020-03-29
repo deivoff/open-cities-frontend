@@ -101,9 +101,10 @@ type Query {
     city(url: String!): City
     geos(layerId: ID!): [Geo!]!
     getGoogleOAuthRedirect: AuthRedirect!
-    getUsers: [User!]!
     layers(mapId: String!): [Layer!]!
+    map(id: String!): Map
     maps(userId: String!): [Map!]!
+    users: [User!]!
 }
 
 type User {

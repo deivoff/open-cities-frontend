@@ -36,7 +36,7 @@ export default withApollo(({ initialState }) => new ApolloClient({
     dataIdFromObject: object => {
       // eslint-disable-next-line no-underscore-dangle
       if (object.__typename === 'City') {
-        return (object as any).url;
+        return `City:${(object as any).url}`;
       }
 
       return defaultDataIdFromObject(object);

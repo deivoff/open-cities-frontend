@@ -1,0 +1,28 @@
+query GetCity($url: String!) {
+    city(url: $url) {
+        name
+        url
+        map {
+            _id
+            name
+            description
+            settings {
+                bbox
+                zoom
+            }
+            layers {
+                _id
+                name
+                description
+                owner {
+                    _id
+                    name {
+                        givenName
+                        familyName
+                    }
+                }
+                settings
+            }
+        }
+    }
+}

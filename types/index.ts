@@ -8,4 +8,4 @@ export type LayerProperty = {
   nested?: LayerProperty[];
 }
 
-export type Position = [number, number] | [number, number, number];
+export type Position = [number, number];

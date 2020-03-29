@@ -1,32 +1,22 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import useToggle from '$hooks/useToggle';
 import { IconButton } from '$components/index';
 import { useAuth } from '$context/auth';
-import { GET_LAYERS, GetLayers, GetLayersVariables } from '$apollo/queries';
 import { UserType } from '$types/globalTypes';
 import Layer from './Layer';
 import CreateLayerModal from '../CreateLayerModal';
 
 import css from './index.module.sass';
 
-
-const useGetLayersQuery = (
-  city: string,
-) => useQuery<GetLayers, GetLayersVariables>(GET_LAYERS, { variables: { city } });
-
-type LayersController = React.FC<{
-  city: string;
+export type LayersController = React.FC<{
+  layers: React.ComponentProps<Layer>['layer'][];
+  mapId: string;
 }>
-export const LayersController: LayersController = ({ city }) => {
-  const { data: layersData, loading: layersLoading, error: layersError } = useGetLayersQuery(city);
+export const LayersController: LayersController = ({ layers, mapId }) => {
   const { user } = useAuth();
   const [open, handlerOpen] = useToggle(true);
 
-  if (layersError) return null;
-  if (layersLoading || !layersData) return null;
-  const isResearcher = user?.access !== UserType.user;
-
+  const isResearcher = user?.access === UserType.admin || UserType.researcher;
   return (
     <div
       className={css['layers-controller']}
@@ -41,14 +31,14 @@ export const LayersController: LayersController = ({ city }) => {
           onClick={handlerOpen}
         />
         <h3>Слои</h3>
-        {isResearcher && <CreateLayerModal city={city} />}
       </div>
-      <Layers layers={layersData?.layers} />
+      <Layers layers={layers} />
+      {isResearcher && <CreateLayerModal mapId={mapId} />}
     </div>
   );
 };
 
-type Layers = React.FC<{ layers: GetLayers['layers'] }>
+type Layers = React.FC<{ layers: React.ComponentProps<Layer>['layer'][] }>
 const Layers: Layers = ({ layers }) => {
   if (!layers.length) return <>У этой карты пока нет слоев :с</>;
 

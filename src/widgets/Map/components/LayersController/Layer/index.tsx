@@ -4,7 +4,7 @@ import { useLeaflet } from 'react-leaflet';
 import { geoJSON } from 'leaflet';
 import cn from 'classnames';
 import {
-  GET_GEOS, GetGeos, GetGeosVariables, GetLayers,
+  GET_GEOS, GetGeos, GetGeosVariables,
 } from '$apollo/queries';
 import { useAuth } from '$context/auth';
 import useToggle from '$hooks/useToggle';
@@ -16,7 +16,18 @@ import css from './Layer.module.sass';
 
 
 type Layer = React.FC<{
-  layer: GetLayers['layers'][0];
+  layer: {
+    _id: any;
+    name: string;
+    description?: string;
+    owner: {
+      name: {
+        givenName: string;
+        familyName: string;
+      }
+    }
+    settings: any[];
+  };
   className?: string;
 }>
 
