@@ -25,8 +25,8 @@ export const LayersController: LayersController = ({ layers, mapId }) => {
       <div className={css['layers-controller__header']}>
         <IconButton
           className={css['layers-controller__button']}
-          icon="arrow"
-          theme={open ? 'disabled' : 'success'}
+          icon="ArrowLeft"
+          theme={open ? 'white' : 'success'}
           aria-expanded={open}
           onClick={handlerOpen}
         />

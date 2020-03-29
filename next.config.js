@@ -1,6 +1,8 @@
 const path = require('path');
-
 const withSass = require('@zeit/next-sass');
+
+const { NODE_ENV } = process.env;
+
 const getTsAliases = (tsconfigPath = './tsconfig.json') => {
   const { paths } = require(tsconfigPath).compilerOptions;
   
@@ -36,6 +38,6 @@ module.exports = withSass({
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
-    localIdentName: "[local]___[hash:base64:5]",
+    localIdentName: NODE_ENV === 'development' ? "[local]__[hash:base64:5]" : "[hash:base64:5]",
   }
 });

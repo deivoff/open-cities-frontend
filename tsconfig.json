@@ -25,6 +25,7 @@
       "$components/*": ["src/components/*"],
       "$context/*": ["src/context/*"],
       "$hooks/*": ["src/hooks/*"],
+      "$icons/*": ["src/icons/*"],
       "$lib/*": ["lib/*"],
       "$static/*": ["src/static/*"],
       "$types/*": ["types/*"],

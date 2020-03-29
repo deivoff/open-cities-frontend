@@ -106,7 +106,12 @@ const CreateLayerModal: React.FC<CreateLayerProps> = ({ mapId }) => {
 
   return (
     <>
-      <IconButton icon="plus" theme="info" onClick={openModalHandler} type="button">
+      <IconButton
+        icon="Plus"
+        theme="info"
+        onClick={openModalHandler}
+        type="button"
+      >
         Добавить слой
       </IconButton>
       <Modal isOpen={isModalOpen} onRequestClose={closeModalHandler} shouldCloseOnOverlayClick>
