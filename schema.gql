@@ -67,7 +67,7 @@ type Layer {
     description: String!
     name: String!
     owner: User!
-    settings: [JSON!]!
+    settings: JSON!
     updatedAt: DateTime!
 }
 
@@ -164,7 +164,7 @@ input GeometryInput {
 input LayerInput {
     description: String!
     name: String!
-    properties: [JSON!]!
+    settings: JSON!
 }
 
 input MapInput {

@@ -41,7 +41,7 @@ const CSVLoader: React.FC<Props> = ({ onDotsNormalize, layerId }) => {
           ],
           type: settings.geometry.type,
         },
-        properties: {
+        settings: {
           type: 'test',
         },
         layer: layerId,

@@ -11,7 +11,7 @@ export interface GetLayers_layers {
   _id: string;
   name: string;
   description: string;
-  settings: any[];
+  settings: any;
 }
 
 export interface GetLayers {

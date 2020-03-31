@@ -24,9 +24,9 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Открытые города | Главная </title>
+        <title>Главная | Открытые города</title>
       </Head>
-      <Banner dots={dots}/>
+      <Banner dots={dots} />
     </>
   );
 };

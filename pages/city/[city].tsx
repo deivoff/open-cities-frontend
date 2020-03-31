@@ -34,9 +34,7 @@ const MapPage: NextPage = () => {
     <>
       <Head>
         <title>
-          Открытые города |
-          {' '}
-          {name}
+          {name} | Открытые города
         </title>
       </Head>
       <Page.Map>

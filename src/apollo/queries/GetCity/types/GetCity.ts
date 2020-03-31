@@ -30,7 +30,7 @@ export interface GetCity_city_map_layers {
   name: string;
   description: string;
   owner: GetCity_city_map_layers_owner;
-  settings: any[];
+  settings: any;
 }
 
 export interface GetCity_city_map {

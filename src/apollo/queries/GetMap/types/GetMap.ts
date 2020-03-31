@@ -12,7 +12,7 @@ export interface GetMap_map_layers {
   __typename: "Layer";
   name: string;
   description: string;
-  settings: any[];
+  settings: any;
 }
 
 export interface GetMap_map_access_view_group {
