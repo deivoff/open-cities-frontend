@@ -40,13 +40,12 @@ type City {
 
 type Geo {
     _id: ID!
-    access: Access!
     author: User!
     createdAt: DateTime!
     geometry: Geometry!
     layer: Layer!
     owner: User!
-    settings: JSON!
+    properties: JSON!
     updatedAt: DateTime!
 }
 
@@ -153,7 +152,7 @@ enum UserType {
 input GeoInput {
     geometry: GeometryInput!
     layer: ID!
-    settings: JSON!
+    properties: JSON!
 }
 
 input GeometryInput {

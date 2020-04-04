@@ -974,22 +974,6 @@
             "deprecationReason": null
           },
           {
-            "name": "access",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Access",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "geometry",
             "description": null,
             "args": [],
@@ -1006,7 +990,7 @@
             "deprecationReason": null
           },
           {
-            "name": "settings",
+            "name": "properties",
             "description": null,
             "args": [],
             "type": {
@@ -1781,7 +1765,7 @@
             "defaultValue": null
           },
           {
-            "name": "settings",
+            "name": "properties",
             "description": null,
             "type": {
               "kind": "NON_NULL",

@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useLeaflet } from 'react-leaflet';
 import { geoJSON } from 'leaflet';
 import cn from 'classnames';
+import { heatLayer } from '$lib/leaflet/heat';
 import {
   GET_GEOS, GetGeos, GetGeosVariables,
 } from '$apollo/queries';
@@ -11,8 +12,10 @@ import useToggle from '$hooks/useToggle';
 import { Spiner } from '$components/spiner';
 import { IconButton } from '$components/layout';
 import { CreateGeoModal } from '../../CreateGeoModal';
+import { LayerSettings } from '$types/index';
 
 import css from './Layer.module.sass';
+import { getValue } from '$widgets/Map/components/CreateLayerModal/LayerForm/utils';
 
 
 type Layer = React.FC<{
@@ -26,10 +29,12 @@ type Layer = React.FC<{
         familyName: string;
       }
     }
-    settings: any[];
+    settings: LayerSettings;
   };
   className?: string;
 }>
+
+type Geo = GetGeos['geos'][0];
 
 function useGetGeos(layerId: string) {
   return useQuery<GetGeos, GetGeosVariables>(GET_GEOS, {
@@ -40,16 +45,124 @@ function useGetGeos(layerId: string) {
 }
 
 const getColor = () => '_green';
-const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
+
+type LeafletLayer<T extends object> = {
+  settings: LayerSettings;
+  geos?: Geo[];
+  visible: boolean;
+} & T;
+
+type UseLeafletLayer<T extends object = {}> = (layer: LeafletLayer<T>) => void
+
+const useLeafletGeoJSONLayer: UseLeafletLayer = ({
+  settings,
+  geos,
+  visible,
+}) => {
   const { map } = useLeaflet();
+
+  const { current: geoGroup } = useRef(geoJSON(undefined, {
+    onEachFeature: ({ properties }, layer) => {
+      const content = Object.keys(properties).reduce((acc, key) => {
+        const value = getValue(properties[key], settings[key].type);
+
+        return `${acc}<li>${settings[key].name}: ${value}</li>`;
+      }, '');
+      layer.bindPopup(`<ul>${content}</ul>`);
+    },
+  }));
+
+  useEffect(() => {
+    if (geos) {
+      geoGroup.clearLayers();
+
+      geos.forEach(geo => {
+        geoGroup.addData({
+          type: 'Feature',
+          ...geo,
+        });
+      });
+    }
+
+    return () => { geoGroup.clearLayers(); };
+  }, [geoGroup, geos]);
+
+  useEffect(() => {
+    if (visible) {
+      geoGroup.addTo(map!);
+    } else {
+      geoGroup.removeFrom(map!);
+    }
+    return () => { geoGroup.removeFrom(map!); };
+  }, [visible, geoGroup, map]);
+};
+
+const useLeafletHeatLayer: UseLeafletLayer = ({
+  settings,
+  geos,
+  visible,
+}) => {
+  const { map } = useLeaflet();
+
+  const { current: heatGroup } = useRef(heatLayer([], {
+    radius: 40,
+    minOpacity: 0.5,
+    maxZoom: 23,
+    blur: 15,
+    max: 1.0,
+  }));
+
+  useEffect(() => {
+    if (geos) {
+      heatGroup.remove();
+
+      heatGroup.setLatLngs(geos.map(geo => [
+        geo.geometry.coordinates[1],
+        geo.geometry.coordinates[0],
+      ] as any));
+    }
+
+    return () => { heatGroup.remove(); };
+  }, [heatGroup, geos]);
+
+  useEffect(() => {
+    if (visible) {
+      heatGroup.addTo(map!);
+    } else {
+      heatGroup.removeFrom(map!);
+    }
+    return () => { heatGroup.removeFrom(map!); };
+  }, [visible, heatGroup, map]);
+};
+
+const Layer: Layer = ({
+  className, layer: {
+    _id,
+    name,
+    description,
+    settings,
+  },
+}) => {
   const { user } = useAuth();
-  const { current: geoGroup } = useRef(geoJSON());
   const [open, handlerOpen] = useToggle(true);
   const [visible, handlerVisible] = useToggle(false);
+  const [heat, toggleHeat] = useToggle(false);
   const { data, error, loading } = useGetGeos(_id);
+
+  useLeafletGeoJSONLayer({
+    settings,
+    geos: data?.geos,
+    visible: visible && !heat,
+  });
+
+  useLeafletHeatLayer({
+    settings,
+    geos: data?.geos,
+    visible: visible && heat,
+  });
+
   const isResearcher = user?.access !== 'user';
   let buttonVisible = <Spiner />;
-
   if (error) {
     buttonVisible = <>X</>;
   }
@@ -61,34 +174,11 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
       <IconButton
         icon="Eye"
         onClick={handlerVisible}
-        theme={visible ? 'main-blue' : 'disabled'}
+        theme={visible ? 'white' : 'disabled'}
         className={cn(css['layer-controller__eye'])}
       />
     );
   }
-
-  useEffect(() => {
-    if (data) {
-      geoGroup.clearLayers();
-      data.geos.forEach(geo => {
-        geoGroup.addData({
-          type: 'Feature',
-          ...geo,
-        });
-      });
-    }
-
-    return () => { geoGroup.clearLayers(); };
-  }, [geoGroup, data]);
-
-  useEffect(() => {
-    if (visible) {
-      geoGroup.addTo(map!);
-    } else {
-      geoGroup.removeFrom(map!);
-    }
-    return () => { geoGroup.removeFrom(map!); };
-  }, [visible, geoGroup, map]);
 
   return (
     <li
@@ -99,7 +189,8 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
     >
       <div className={cn(css['layer-controller__header'], css[getColor()])}>
         <IconButton
-          icon="arrow"
+          icon="ArrowLeft"
+          theme="white"
           onClick={handlerOpen}
           aria-expanded={open}
           className={cn(css['layer-controller__arrow'])}
@@ -112,6 +203,14 @@ const Layer: Layer = ({ className, layer: { _id, name, description } }) => {
         aria-hidden={!open}
       >
         {description}
+        <label>
+          <input
+            type="checkbox"
+            checked={heat}
+            onChange={toggleHeat}
+          />
+          Отобразить как тепловую
+        </label>
         {isResearcher && <CreateGeoModal layerId={_id} />}
       </div>
     </li>

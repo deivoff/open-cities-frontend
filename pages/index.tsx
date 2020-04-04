@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { Banner, getRandomInt } from '$widgets/MainBanner';
+import { Banner } from '$widgets/MainBanner';
+import { getRandomInt } from '$utils/index';
 
 const MAX_DOTS = 200;
 const INITIAL_DOTS = 0;

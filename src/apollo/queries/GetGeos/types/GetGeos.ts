@@ -18,7 +18,7 @@ export interface GetGeos_geos {
   __typename: "Geo";
   _id: string;
   geometry: GetGeos_geos_geometry;
-  settings: any;
+  properties: any;
 }
 
 export interface GetGeos {
