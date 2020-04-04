@@ -18,8 +18,10 @@ import { MainFields } from './MainFields';
 import { SettingsFields } from './SettingsFields';
 import { getGeoSettings, Row, Values } from './utils';
 
+import s from './LayerForm.module.sass';
+
 type Props = {
-  onSubmit: (values: Values) => void;
+  formClose: () => void;
   mapId: string;
 }
 
@@ -70,7 +72,7 @@ const useCreateGeosMutation = (
   },
 });
 
-export const LayerForm: React.FC<Props> = ({ onSubmit, mapId }) => {
+export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
   const [rows, setRows] = useState<Maybe<Row[]>>(null);
   const [layerId, setLayerId] = useState('');
   const [completedSettings, setCompletedSettings] = useState<Maybe<LayerSettings>>(null);
@@ -121,11 +123,12 @@ export const LayerForm: React.FC<Props> = ({ onSubmit, mapId }) => {
             mapId,
           },
         });
-        await onSubmit(values);
+        formClose();
       }}
     >{
         props => (
-          <form onSubmit={props.handleSubmit}>
+          <form onSubmit={props.handleSubmit} className={s['layer-form']}>
+            <h2  className={s['layer-form__title']}>Добавление слоя</h2>
             <MainFields onFileLoaded={handlerFileLoaded} />
             {rows && (
               <SettingsFields
@@ -133,8 +136,11 @@ export const LayerForm: React.FC<Props> = ({ onSubmit, mapId }) => {
                 onSettingsComplete={handlerSetSettings}
               />
             )}
-            <Button type="submit" style={{ display: 'block' }}>
-              Отправить
+            <Button type="submit" theme="main-blue" className={s['layer-form__button']}>
+              Загрузить слой
+            </Button>
+            <Button type="button" theme="transparent-blue" className={s['layer-form__button']} onClick={formClose}>
+              Отменить
             </Button>
           </form>
         )
