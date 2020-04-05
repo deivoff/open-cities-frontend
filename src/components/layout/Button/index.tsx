@@ -1,10 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
-import dynamic from 'next/dynamic';
+import { Theme } from '../utils';
+import { Icon } from '../Icon';
 
 import css from './Button.module.sass';
 
-type Theme = 'main-green' | 'white' | 'google' | 'main-blue' | 'disabled';
 type DefaultProps<T = {}> = React.ButtonHTMLAttributes<{}> & T;
 
 type Button = React.FC<DefaultProps<{
@@ -34,11 +34,7 @@ export const GoogleButton: GoogleButton = ({
   ...rest
 }) => <button className={css['google-button']} type={type} {...rest} />;
 
-type IconButton = React.FC<DefaultProps<{
-  icon: string;
-  theme?: Theme;
-  svg?: React.SVGProps<SVGSVGElement>
-}>>
+type IconButton = React.FC<DefaultProps<React.ComponentProps<Icon>>>
 export const IconButton: IconButton = ({
   type = 'button',
   icon,
@@ -48,7 +44,7 @@ export const IconButton: IconButton = ({
   svg = {},
   ...rest
 }) => {
-  const Icon = dynamic(() => import(`$icons/${icon}`), { ssr: false });
+  
   return (
     <button
       className={cn(
@@ -58,12 +54,7 @@ export const IconButton: IconButton = ({
       type={type}
       {...rest}
     >
-      <div className={cn(
-        css['icon-button__icon'],
-        css[`_${theme}`],
-      )}>
-        <Icon {...svg} />
-      </div>
+      <Icon theme={theme} icon={icon} svg={svg} />
       {children && (
         <span className={cn(
           css['icon-button__text'], css[`_${theme}`],

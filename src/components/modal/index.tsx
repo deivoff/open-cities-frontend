@@ -10,7 +10,7 @@ interface Modal extends React.FC<ModalProps> {
   Body: React.FC;
 }
 export const Modal: Modal = ({ children, ...rest }) => (
-  <ReactModal {...rest} className={css['modal-window']} overlayClassName={css['modal-wrapper']} ariaHideApp={false}>
+  <ReactModal {...rest} className={css['modal-window']} overlayClassName={css['modal-overlay']} ariaHideApp={false}>
     <button
       type="button"
       className={css['modal-window__close']}

@@ -172,7 +172,7 @@ const Layer: Layer = ({
   if (data) {
     buttonVisible = (
       <IconButton
-        icon="Eye"
+        icon={visible ? 'Eye' : 'EyeHidden'}
         onClick={handlerVisible}
         theme={visible ? 'white' : 'disabled'}
         className={cn(css['layer-controller__eye'])}
