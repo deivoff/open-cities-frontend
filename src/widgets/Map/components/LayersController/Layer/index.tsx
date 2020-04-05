@@ -144,7 +144,7 @@ const Layer: Layer = ({
   },
 }) => {
   const { user } = useAuth();
-  const [open, handlerOpen] = useToggle(true);
+  const [open, handlerOpen] = useToggle(false);
   const [visible, handlerVisible] = useToggle(false);
   const [heat, toggleHeat] = useToggle(false);
   const { data, error, loading } = useGetGeos(_id);
