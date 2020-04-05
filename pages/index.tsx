@@ -4,12 +4,12 @@ import Head from 'next/head';
 import { Banner } from '$widgets/MainBanner';
 import { getRandomInt } from '$utils/index';
 
-const MAX_DOTS = 200;
+const MAX_DOTS = 150;
 const INITIAL_DOTS = 0;
 const TIME_CREATE_DOTS_MS = 20;
 
 const Home: NextPage = () => {
-  const [dots, setDots] = useState([{ duration: getRandomInt(4, 8), key: 0 }]);
+  const [dots, setDots] = useState([{ duration: getRandomInt(2, 6), key: 0 }]);
   const [activeDots, setActiveDots] = useState(INITIAL_DOTS);
 
   useEffect(() => {

@@ -173,9 +173,11 @@ const Profile: React.FC = () => {
     </Nav.Profile>
   );
 };
-
-export const Header: React.FC = () => (
-  <header className={cn(s.header)}>
+type HeaderProps = {
+  fixed?: boolean;
+}
+export const Header: React.FC<HeaderProps> = ({ fixed }) => (
+  <header className={cn(s.header, fixed && s['_fixed'])}>
     <Link href="/">
       <a className={s.logo}>Открытые города</a>
     </Link>
