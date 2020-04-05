@@ -12,7 +12,7 @@ import useToggle from '$hooks/useToggle';
 import { Spiner } from '$components/spiner';
 import { IconButton } from '$components/layout';
 import { CreateGeoModal } from '../../CreateGeoModal';
-import { LayerSettings } from '$types/index';
+import { LayerSettings, UserType } from '$types/index';
 
 import css from './Layer.module.sass';
 import { getValue } from '$widgets/Map/components/CreateLayerModal/LayerForm/utils';
@@ -161,7 +161,7 @@ const Layer: Layer = ({
     visible: visible && heat,
   });
 
-  const isResearcher = user?.access !== 'user';
+  const isResearcher = user?.access === (UserType.admin || UserType.researcher);
   let buttonVisible = <Spiner />;
   if (error) {
     buttonVisible = <>X</>;

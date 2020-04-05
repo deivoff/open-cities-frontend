@@ -26,6 +26,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Главная | Открытые города</title>
+        <meta name="google-site-verification" content="W-Z_tdIa68wRmSq14_MTbc9l7JhF30Uuv98Gw3NhOYM" />
       </Head>
       <Banner dots={dots} />
     </>
