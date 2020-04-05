@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-common';
 import { AuthContext, useAuth } from '$context/auth';
@@ -19,10 +20,13 @@ const OpenCitiesApp = ({
   apollo
 }: OpenCitiesProps) => {
   const authContext = useAuth();
+  const { pathname } = useRouter();
+  const isMainPage = pathname === '/';
+
   return (
     <ApolloProvider client={apollo}>
       <AuthContext.Provider value={authContext}>
-        <Header />
+        <Header fixed={isMainPage} />
         <Component {...pageProps} />
       </AuthContext.Provider>
     </ApolloProvider>

@@ -3,14 +3,14 @@
 .banner
   @include container(wrapper)
   position: relative
-  height: 80vh
+  height: 90vh
   display: flex
-  background-color: var(--mainColor)
+  background: linear-gradient(152.21deg, #600011 -32.91%, rgba(134, 0, 48, 0) 37.01%), var(--mainColor)
 
 .description
   @include col($lg, 8)
   @include col($xl, 6)
-  padding-top: 22vh
+  padding-top: 32vh
   color: var(--w)
   z-index: 1
 
@@ -37,11 +37,11 @@
   align-items: center
   right: 0
   z-index: 0
-  &:before
-    content: ''
-    position: absolute
-    top: 0
-    left: 0
-    height: 100%
-    width: 100%
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 2%, rgba(193, 198, 205, 0) 10%, rgba(4, 16, 48, 0.31) 31%, var(--mainColor) 61%)
+  //&:before
+  //  content: ''
+  //  position: absolute
+  //  top: 0
+  //  left: 0
+  //  height: 100%
+  //  width: 100%
+  //  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 2%, rgba(193, 198, 205, 0) 10%, rgba(4, 16, 48, 0.31) 31%, var(--mainColor) 61%)

@@ -5,11 +5,10 @@
   border: none
   font-size: 14px
   line-height: 18px
-  padding: 8px 35px
-  border-radius: 18px
+  padding: 8px 25px
+  border-radius: var(--main-radius)
   outline: none
   cursor: pointer
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25)
   transition-duration: .2s
 
   &:hover
@@ -21,10 +20,17 @@
   &._main-green
     background-color: var(--main-green)
     color: white
+    border-radius: 18px
 
   &._main-blue
     background-color: var(--main-blue)
     color: white
+    border: 1px solid var(--main-blue)
+
+  &._transparent-blue
+    background-color: var(--w)
+    border: 1px solid var(--main-blue)
+    
 
 .google-button
   outline: none
@@ -59,27 +65,3 @@
 
     &._main-blue
       color: var(--main-blue)
-
-  &__icon
-    border-radius: 100%
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 24px
-    height: 24px
-
-    &._main-blue
-      background-color: var(--main-blue)
-      color: white
-
-    &._white
-      background-color: white
-      color: var(--main-blue)
-
-    &._main-green
-      background-color: var(--main-green)
-      color: white
-
-    &._disabled
-      background-color: white
-      color: gray
