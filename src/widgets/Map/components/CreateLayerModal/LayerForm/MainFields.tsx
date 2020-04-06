@@ -38,13 +38,13 @@ export const MainFields: MainFields = ({ onFileLoaded }) => {
       <CSVReader
         cssInputClass={s['layer-form-loader__input']}
         cssClass={s['layer-form__loader']}
-        label={
+        label={(
           <div className={s['layer-form-loader__label']}>
-            <Icon icon="Plus" theme="main-blue" className={s['layer-form-loader__icon']}/>
+            <Icon icon="Plus" theme="main-blue" className={s['layer-form-loader__icon']} />
             <div>Загрузить файл с данными</div>
             <div>Форматы JSON, CSV</div>
           </div>
-        }
+        )}
 
         onFileLoaded={onFileLoaded}
         parserOptions={{
