@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const SvgEye = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg width={20} height={12} fill="none" {...props}>
+  <svg width={20} height={14} fill="none" {...props}>
     <path
       d="M19.152 4.975a1.473 1.473 0 010 2.05C17.776 8.488 14.726 11 10 11 5.274 11 2.223 8.488.848 7.025a1.473 1.473 0 010-2.05C2.223 3.512 5.274 1 10 1c4.726 0 7.776 2.512 9.152 3.975z"
       stroke="currentColor"

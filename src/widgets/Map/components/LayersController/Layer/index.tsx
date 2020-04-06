@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { useQuery } from '@apollo/react-hooks';
 import { useLeaflet } from 'react-leaflet';
 import { geoJSON } from 'leaflet';
@@ -62,13 +63,25 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
   const { map } = useLeaflet();
 
   const { current: geoGroup } = useRef(geoJSON(undefined, {
-    onEachFeature: ({ properties }, layer) => {
-      const content = Object.keys(properties).reduce((acc, key) => {
-        const value = getValue(properties[key], settings[key].type);
+    onEachFeature: (point, layer) => {
+      const popupContentNode = 
+        <ul className={css['popup__list']}>
+           {Object.keys(point.properties).map(key => {
+             const name = settings[key].name;
+             const value = String(getValue(point.properties[key], settings[key].type));
 
-        return `${acc}<li>${settings[key].name}: ${value}</li>`;
-      }, '');
-      layer.bindPopup(`<ul>${content}</ul>`);
+             return (
+              <li className={css['popup__elem']}>
+                <div className={css['popup__name']}>{name}</div>
+                <div className={css['popup__value']}>{value}</div>
+              </li>
+             )
+            })}
+        </ul>;
+      const popupContentHtml = ReactDOMServer.renderToString(popupContentNode);
+      layer.bindPopup(popupContentHtml, {
+        className: css['popup']
+      });
     },
   }));
 

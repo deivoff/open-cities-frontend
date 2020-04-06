@@ -16,7 +16,7 @@ export const LayersController: LayersController = ({ layers, mapId }) => {
   const { user } = useAuth();
   const [open, handlerOpen] = useToggle(true);
 
-  const isResearcher = user?.access === (UserType.admin || UserType.researcher);
+  const isResearcher = true; //user?.access === (UserType.admin || UserType.researcher);
   return (
     <div
       className={css['layers-controller']}
