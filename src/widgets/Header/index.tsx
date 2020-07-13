@@ -14,10 +14,9 @@ import {
   GetCities, GetGoogleRedirectURL,
 } from '$apollo/queries';
 import { AUTH_GOOGLE, AuthGoogle, AuthGoogleVariables } from '$apollo/mutations';
-import { AuthContext, User } from '$context/auth';
+import { AuthContext } from '$context/auth';
 
 import s from './Header.module.sass';
-// const ArrowMenu = require('../../assets/svg/ArrowMenu.svg');
 
 const CitiesList: React.FC = () => {
   const { data, loading, error } = useQuery<GetCities>(GET_CITIES);

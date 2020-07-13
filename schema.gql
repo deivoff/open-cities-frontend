@@ -5,23 +5,6 @@ schema {
     mutation: Mutation
 }
 
-type Access {
-    comment: AccessSettings!
-    coowner: AccessSettingsCoowner!
-    edit: AccessSettings!
-    view: AccessSettings!
-}
-
-type AccessSettings {
-    anyone: Boolean
-    group: [User!]
-    role: UserType
-}
-
-type AccessSettingsCoowner {
-    group: [User!]
-}
-
 type AuthRedirect {
     url: String!
 }
@@ -40,7 +23,6 @@ type City {
 
 type Geo {
     _id: ID!
-    author: User!
     createdAt: DateTime!
     geometry: Geometry!
     layer: Layer!
@@ -61,7 +43,7 @@ type GoogleProvider {
 
 type Layer {
     _id: ID!
-    access: Access!
+    access: ACCESS_CODE!
     createdAt: DateTime!
     description: String!
     name: String!
@@ -72,7 +54,7 @@ type Layer {
 
 type Map {
     _id: ID!
-    access: Access!
+    access: ACCESS_CODE!
     createdAt: DateTime!
     description: String!
     draft: Boolean!
@@ -84,7 +66,7 @@ type Map {
 }
 
 type MapSettings {
-    bbox: [GeometryCoords!]!
+    bbox: GeometryCoords!
     zoom: Int!
 }
 
@@ -101,9 +83,9 @@ type Query {
     city(url: String!): City
     geos(layerId: ID!): [Geo!]!
     getGoogleOAuthRedirect: AuthRedirect!
-    layers(mapId: String!): [Layer!]!
-    map(id: String!): Map
-    maps(userId: String!): [Map!]!
+    layers(mapId: ID!): [Layer!]!
+    map(mapId: ID!): Map
+    maps(userId: ID!): [Map!]!
     users: [User!]!
 }
 
@@ -112,7 +94,7 @@ type User {
     email: String!
     name: UserName!
     photos: [UserPhoto!]!
-    role: UserType!
+    role: USER_ROLE!
     social: UserSocial!
 }
 
@@ -129,6 +111,14 @@ type UserSocial {
     googleProvider: GoogleProvider!
 }
 
+enum ACCESS_CODE {
+    COMMENT
+    COOWNER
+    EDIT
+    NONE
+    VIEW
+}
+
 enum AccessType {
     city
     default
@@ -143,10 +133,10 @@ enum GeometryType {
     Polygon
 }
 
-enum UserType {
-    admin
-    researcher
-    user
+enum USER_ROLE {
+    ADMIN
+    RESEARCHER
+    USER
 }
 
 input GeoInput {
@@ -173,7 +163,7 @@ input MapInput {
 }
 
 input MapSettingInput {
-    bbox: [GeometryCoords!]!
+    bbox: GeometryCoords!
     zoom: Int!
 }
 

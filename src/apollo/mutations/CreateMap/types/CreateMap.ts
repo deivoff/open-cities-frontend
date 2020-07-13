@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { MapInput, AccessType, UserType } from "./../../../../../types/globalTypes";
+import { MapInput, AccessType, ACCESS_CODE } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateMap
@@ -10,51 +10,8 @@ import { MapInput, AccessType, UserType } from "./../../../../../types/globalTyp
 
 export interface CreateMap_createMap_settings {
   __typename: "MapSettings";
-  bbox: any[];
+  bbox: any;
   zoom: number;
-}
-
-export interface CreateMap_createMap_access_view_group {
-  __typename: "User";
-  _id: string;
-}
-
-export interface CreateMap_createMap_access_view {
-  __typename: "AccessSettings";
-  role: UserType | null;
-  group: CreateMap_createMap_access_view_group[] | null;
-  anyone: boolean | null;
-}
-
-export interface CreateMap_createMap_access_comment_group {
-  __typename: "User";
-  _id: string;
-}
-
-export interface CreateMap_createMap_access_comment {
-  __typename: "AccessSettings";
-  role: UserType | null;
-  group: CreateMap_createMap_access_comment_group[] | null;
-  anyone: boolean | null;
-}
-
-export interface CreateMap_createMap_access_edit_group {
-  __typename: "User";
-  _id: string;
-}
-
-export interface CreateMap_createMap_access_edit {
-  __typename: "AccessSettings";
-  role: UserType | null;
-  group: CreateMap_createMap_access_edit_group[] | null;
-  anyone: boolean | null;
-}
-
-export interface CreateMap_createMap_access {
-  __typename: "Access";
-  view: CreateMap_createMap_access_view;
-  comment: CreateMap_createMap_access_comment;
-  edit: CreateMap_createMap_access_edit;
 }
 
 export interface CreateMap_createMap {
@@ -62,7 +19,7 @@ export interface CreateMap_createMap {
   name: string;
   description: string;
   settings: CreateMap_createMap_settings;
-  access: CreateMap_createMap_access;
+  access: ACCESS_CODE;
 }
 
 export interface CreateMap {

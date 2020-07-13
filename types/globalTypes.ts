@@ -6,6 +6,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum ACCESS_CODE {
+  COMMENT = "COMMENT",
+  COOWNER = "COOWNER",
+  EDIT = "EDIT",
+  NONE = "NONE",
+  VIEW = "VIEW",
+}
+
 export enum AccessType {
   city = "city",
   default = "default",
@@ -20,10 +28,10 @@ export enum GeometryType {
   Polygon = "Polygon",
 }
 
-export enum UserType {
-  admin = "admin",
-  researcher = "researcher",
-  user = "user",
+export enum USER_ROLE {
+  ADMIN = "ADMIN",
+  RESEARCHER = "RESEARCHER",
+  USER = "USER",
 }
 
 export interface GeoInput {
@@ -44,7 +52,7 @@ export interface MapInput {
 }
 
 export interface MapSettingInput {
-  bbox: any[];
+  bbox: any;
   zoom: number;
 }
 

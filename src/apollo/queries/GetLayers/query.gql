@@ -1,8 +1,12 @@
-query GetLayers($mapId: String!) {
+query GetLayers($mapId: ID!) {
     layers(mapId: $mapId) {
         _id
         name
         description
         settings
+        access
+        owner {
+            role
+        }
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import useToggle from '$hooks/useToggle';
 import { IconButton } from '$components/index';
 import { useAuth } from '$context/auth';
-import { UserType } from '$types/globalTypes';
+import { USER_ROLE } from '$types/index';
 import Layer from './Layer';
 import CreateLayerModal from '../CreateLayerModal';
 
@@ -16,7 +16,7 @@ export const LayersController: LayersController = ({ layers, mapId }) => {
   const { user } = useAuth();
   const [open, handlerOpen] = useToggle(true);
 
-  const isResearcher = user?.access === (UserType.admin || UserType.researcher);
+  const isResearcher = user?.access === (USER_ROLE.ADMIN || USER_ROLE.RESEARCHER);
   return (
     <div
       className={css['layers-controller']}

@@ -22,6 +22,7 @@ query GetCity($url: String!) {
                     }
                 }
                 settings
+                access
             }
         }
     }
