@@ -11,6 +11,7 @@ export enum ACCESS_CODE {
   COOWNER = "COOWNER",
   EDIT = "EDIT",
   NONE = "NONE",
+  OWNER = "OWNER",
   VIEW = "VIEW",
 }
 
@@ -36,7 +37,7 @@ export enum USER_ROLE {
 
 export interface GeoInput {
   geometry: GeometryInput;
-  layer: string;
+  layer: any;
   properties: any;
 }
 

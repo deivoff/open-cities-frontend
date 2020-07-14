@@ -16,7 +16,7 @@ export interface GetGeos_geos_geometry {
 
 export interface GetGeos_geos {
   __typename: "Geo";
-  _id: string;
+  _id: any;
   geometry: GetGeos_geos_geometry;
   properties: any;
 }
@@ -26,5 +26,5 @@ export interface GetGeos {
 }
 
 export interface GetGeosVariables {
-  layerId: string;
+  layerId: any;
 }

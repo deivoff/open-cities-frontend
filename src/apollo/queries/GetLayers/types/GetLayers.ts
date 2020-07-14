@@ -15,10 +15,10 @@ export interface GetLayers_layers_owner {
 
 export interface GetLayers_layers {
   __typename: "Layer";
-  _id: string;
+  _id: any;
   name: string;
   description: string;
-  settings: any;
+  configuration: any;
   access: ACCESS_CODE;
   owner: GetLayers_layers_owner;
 }
@@ -28,5 +28,5 @@ export interface GetLayers {
 }
 
 export interface GetLayersVariables {
-  mapId: string;
+  mapId: any;
 }

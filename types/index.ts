@@ -1,17 +1,17 @@
 export * from './globalTypes';
 
-export type LayerSettings = {
-  [key in LayerSetting['key']]: LayerSetting;
+export type LayerConfigurations = {
+  [key in LayerConfiguration['key']]: LayerConfiguration;
 }
-export type LayerSetting = {
+export type LayerConfiguration = {
   key: string;
   name: string;
-  type: LayerSettingType;
+  type: LayerConfigurationType;
   description?: string;
-  nested?: LayerSettings;
+  nested?: LayerConfigurations;
 }
 
-export enum LayerSettingType {
+export enum LayerConfigurationType {
   string = 'String',
   number = 'Number',
   datetime = 'Date',

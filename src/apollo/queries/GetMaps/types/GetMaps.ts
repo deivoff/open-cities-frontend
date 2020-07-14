@@ -10,7 +10,7 @@ import { ACCESS_CODE } from "./../../../../../types/globalTypes";
 
 export interface GetMaps_maps {
   __typename: "Map";
-  _id: string;
+  _id: any;
   name: string;
   description: string;
   access: ACCESS_CODE;
@@ -21,5 +21,5 @@ export interface GetMaps {
 }
 
 export interface GetMapsVariables {
-  userId: string;
+  userId: any;
 }

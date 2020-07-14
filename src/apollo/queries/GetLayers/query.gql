@@ -1,9 +1,9 @@
-query GetLayers($mapId: ID!) {
+query GetLayers($mapId: ObjectId!) {
     layers(mapId: $mapId) {
         _id
         name
         description
-        settings
+        configuration
         access
         owner {
             role

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
-import { UserType } from '$types/globalTypes';
+import { USER_ROLE } from '$types/globalTypes';
 
 export interface AuthContext {
   token: string | null;
@@ -16,7 +16,7 @@ export interface User {
     givenName: string;
     familyName: string;
   };
-  access: UserType;
+  access: USER_ROLE;
   photos: [
     {
       url: string;
@@ -55,12 +55,12 @@ export const useAuth = (): AuthContext => {
     }
   }, []);
 
-  const login: Login = (token: string) => {
-    setToken(token);
-    localStorage.setItem('token', token);
+  const login: Login = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem('token', newToken);
     const {
       email, name, photos, id, access,
-    }: User = jwtDecode(token);
+    }: User = jwtDecode(newToken);
     setUser({
       email, name, photos, id, access,
     });

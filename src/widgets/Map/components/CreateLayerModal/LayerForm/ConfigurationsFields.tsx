@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Maybe from 'graphql/tsutils/Maybe';
 import { useFormikContext } from 'formik';
-import { LayerSetting, LayerSettings, LayerSettingType } from '$types/index';
+import s from 'src/widgets/Map/components/CreateLayerModal/LayerForm/ConfigurationsFields.module.sass';
+import { LayerConfiguration, LayerConfigurations, LayerConfigurationType } from '$types/index';
 import { getRandomInt } from '$utils/index';
 import { Values, Row, initSettings } from './utils';
 
-import s from './SettingsFields.module.sass';
 
 type SettingsFields = React.FC<{
   rows: Row[]
-  onSettingsComplete: (settings: LayerSettings) => void;
+  onSettingsComplete: (configurations: LayerConfigurations) => void;
 }>
-export const SettingsFields: SettingsFields = ({ rows, onSettingsComplete }) => {
-  const [settings, setSettings] = useState<Maybe<LayerSettings>>(null);
+export const ConfigurationsFields: SettingsFields = ({ rows, onSettingsComplete }) => {
+  const [configurations, setSettings] = useState<Maybe<LayerConfigurations>>(null);
   const [disabled, setDisabled] = useState(false);
   const [row, setRow] = useState<Maybe<Row>>(null);
   const formik = useFormikContext<Values>();
@@ -25,7 +25,7 @@ export const SettingsFields: SettingsFields = ({ rows, onSettingsComplete }) => 
     setSettings(initial);
     formik.setValues({
       ...formik.values,
-      settings: initial,
+      configuration: initial,
     });
   }, []);
 
@@ -38,13 +38,18 @@ export const SettingsFields: SettingsFields = ({ rows, onSettingsComplete }) => 
 
   const handlerSettingsDone = () => {
     setDisabled(true);
-    onSettingsComplete(formik.values.settings);
+    onSettingsComplete(formik.values.configuration);
   };
 
   return (
     <>
-      {settings && row && Object.keys(settings).map(key => (
-        <SettingField key={key} setting={settings[key]} value={row[key]} disabled={disabled} />
+      {configurations && row && Object.keys(configurations).map(key => (
+        <ConfigurationField
+          key={key}
+          configuration={configurations[key]}
+          value={row[key]}
+          disabled={disabled}
+        />
       ))}
       <button type="button" onClick={handleRandomRow} disabled={disabled}>Новую строку</button>
       <button type="button" onClick={handlerSettingsDone} disabled={disabled}>Завершить настройки</button>
@@ -53,38 +58,38 @@ export const SettingsFields: SettingsFields = ({ rows, onSettingsComplete }) => 
 };
 
 type SettingField = React.FC<{
-  setting: LayerSetting
+  configuration: LayerConfiguration
   disabled?: boolean;
   value: string,
 }>
-const SettingField: SettingField = ({ setting, value, disabled }) => {
+const ConfigurationField: SettingField = ({ configuration, value, disabled }) => {
   const formik = useFormikContext<Values>();
   return (
-    <div className={s['setting-fields']}>
-      <label htmlFor={`settings['${setting.key}'].type`}>{setting.key}</label>
+    <div className={s['configuration-fields']}>
+      <label htmlFor={`configuration['${configuration.key}'].type`}>{configuration.key}</label>
       <select
-        id={`settings['${setting.key}'].type`}
-        name={`settings['${setting.key}'].type`}
+        id={`configuration['${configuration.key}'].type`}
+        name={`configuration['${configuration.key}'].type`}
         disabled={disabled}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.settings[`${setting.key}`]?.type ?? setting.type}
+        value={formik.values.configuration[`${configuration.key}`]?.type ?? configuration.type}
       >
-        {Object.values(LayerSettingType).map((type => (
+        {Object.values(LayerConfigurationType).map((type => (
           <option key={type} value={type}>{type}</option>
         )))}
       </select>
 
-      <label htmlFor={`settings['${setting.key}'].name`}>Имя поля</label>
+      <label htmlFor={`configuration['${configuration.key}'].name`}>Имя поля</label>
       <input
-        id={`settings['${setting.key}'].name`}
-        name={`settings['${setting.key}'].name`}
+        id={`configuration['${configuration.key}'].name`}
+        name={`configuration['${configuration.key}'].name`}
         disabled={disabled}
         placeholder="Ваше название"
         type="text"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.settings[`${setting.key}`]?.name ?? setting.name}
+        value={formik.values.configuration[`${configuration.key}`]?.name ?? configuration.name}
       />
       {value}
     </div>

@@ -1,9 +1,9 @@
-query GetMap($id: ID!) {
+query GetMap($id: ObjectId!) {
     map(mapId: $id) {
         layers {
             name
             description
-            settings
+            configuration
         }
         access
     }

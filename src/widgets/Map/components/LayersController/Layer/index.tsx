@@ -12,7 +12,7 @@ import useToggle from '$hooks/useToggle';
 import { Spiner } from '$components/spiner';
 import { IconButton } from '$components/layout';
 import { CreateGeoModal } from '../../CreateGeoModal';
-import { LayerSettings, USER_ROLE } from '$types/index';
+import { LayerConfigurations, USER_ROLE } from '$types/index';
 
 import css from './Layer.module.sass';
 import { getValue } from '$widgets/Map/components/CreateLayerModal/LayerForm/utils';
@@ -29,7 +29,7 @@ type Layer = React.FC<{
         familyName: string;
       }
     }
-    settings: LayerSettings;
+    configuration: LayerConfigurations;
   };
   className?: string;
 }>
@@ -47,7 +47,7 @@ function useGetGeos(layerId: string) {
 const getColor = () => '_green';
 
 type LeafletLayer<T extends object> = {
-  settings: LayerSettings;
+  configuration: LayerConfigurations;
   geos?: Geo[];
   visible: boolean;
 } & T;
@@ -55,7 +55,7 @@ type LeafletLayer<T extends object> = {
 type UseLeafletLayer<T extends object = {}> = (layer: LeafletLayer<T>) => void
 
 const useLeafletGeoJSONLayer: UseLeafletLayer = ({
-  settings,
+  configuration,
   geos,
   visible,
 }) => {
@@ -64,9 +64,9 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
   const { current: geoGroup } = useRef(geoJSON(undefined, {
     onEachFeature: ({ properties }, layer) => {
       const content = Object.keys(properties).reduce((acc, key) => {
-        const value = getValue(properties[key], settings[key].type);
+        const value = getValue(properties[key], configuration[key].type);
 
-        return `${acc}<li>${settings[key].name}: ${value}</li>`;
+        return `${acc}<li>${configuration[key].name}: ${value}</li>`;
       }, '');
       layer.bindPopup(`<ul>${content}</ul>`);
     },
@@ -98,7 +98,7 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
 };
 
 const useLeafletHeatLayer: UseLeafletLayer = ({
-  settings,
+  configuration,
   geos,
   visible,
 }) => {
@@ -140,7 +140,7 @@ const Layer: Layer = ({
     _id,
     name,
     description,
-    settings,
+    configuration,
   },
 }) => {
   const { user } = useAuth();
@@ -150,13 +150,13 @@ const Layer: Layer = ({
   const { data, error, loading } = useGetGeos(_id);
 
   useLeafletGeoJSONLayer({
-    settings,
+    configuration,
     geos: data?.geos,
     visible: visible && !heat,
   });
 
   useLeafletHeatLayer({
-    settings,
+    configuration,
     geos: data?.geos,
     visible: visible && heat,
   });

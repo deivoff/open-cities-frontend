@@ -12,7 +12,7 @@ export interface GetMap_map_layers {
   __typename: "Layer";
   name: string;
   description: string;
-  settings: any;
+  configuration: any;
 }
 
 export interface GetMap_map {
@@ -26,5 +26,5 @@ export interface GetMap {
 }
 
 export interface GetMapVariables {
-  id: string;
+  id: any;
 }

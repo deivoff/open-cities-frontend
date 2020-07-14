@@ -1,4 +1,4 @@
-query GetMaps($userId: ID!) {
+query GetMaps($userId: ObjectId!) {
     maps(userId: $userId) {
         _id
         name
