@@ -12,21 +12,21 @@ export type Icon = React.FC<{
     className?: string;
 }>
 export const Icon: Icon = ({
-    icon,
-    theme,
-    svg,
-    className,
+  icon,
+  theme,
+  svg,
+  className,
 }) => {
-    const SVGIcon = dynamic(() => import(`$icons/${icon}`), { ssr: false });
+  const SVGIcon = dynamic(() => import(`$icons/${icon}`), { ssr: false });
 
-    return (
-        <div className={cn(
-            className,
-            css['icon'],
-            css[`_${theme}`],
-          )}>
-            <SVGIcon {...svg} />
-          </div>
-    )
-}
-
+  return (
+    <div className={cn(
+      className,
+      css['icon'],
+      css[`_${theme}`],
+    )}
+    >
+      <SVGIcon {...svg} />
+    </div>
+  );
+};

@@ -1,4 +1,4 @@
-query GetGeos($layerId: ID!)  {
+query GetGeos($layerId: ObjectId!)  {
     geos(layerId: $layerId) {
         _id
         geometry {

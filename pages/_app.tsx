@@ -17,7 +17,7 @@ type OpenCitiesProps = AppProps & {
 const OpenCitiesApp = ({
   Component,
   pageProps,
-  apollo
+  apollo,
 }: OpenCitiesProps) => {
   const authContext = useAuth();
   const { pathname } = useRouter();

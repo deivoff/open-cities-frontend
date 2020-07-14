@@ -13,7 +13,7 @@ import useToggle from '$hooks/useToggle';
 import { Spiner } from '$components/spiner';
 import { IconButton } from '$components/layout';
 import { CreateGeoModal } from '../../CreateGeoModal';
-import { LayerSettings, UserType } from '$types/index';
+import { LayerConfigurations, USER_ROLE } from '$types/index';
 
 import css from './Layer.module.sass';
 import { getValue } from '$widgets/Map/components/CreateLayerModal/LayerForm/utils';
@@ -30,7 +30,7 @@ type Layer = React.FC<{
         familyName: string;
       }
     }
-    settings: LayerSettings;
+    configuration: LayerConfigurations;
   };
   className?: string;
 }>
@@ -48,7 +48,7 @@ function useGetGeos(layerId: string) {
 const getColor = () => '_green';
 
 type LeafletLayer<T extends object> = {
-  settings: LayerSettings;
+  configuration: LayerConfigurations;
   geos?: Geo[];
   visible: boolean;
 } & T;
@@ -56,7 +56,7 @@ type LeafletLayer<T extends object> = {
 type UseLeafletLayer<T extends object = {}> = (layer: LeafletLayer<T>) => void
 
 const useLeafletGeoJSONLayer: UseLeafletLayer = ({
-  settings,
+  configuration,
   geos,
   visible,
 }) => {
@@ -64,23 +64,24 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
 
   const { current: geoGroup } = useRef(geoJSON(undefined, {
     onEachFeature: (point, layer) => {
-      const popupContentNode = 
+      const popupContentNode = (
         <ul className={css['popup__list']}>
-           {Object.keys(point.properties).map(key => {
-             const name = settings[key].name;
-             const value = String(getValue(point.properties[key], settings[key].type));
+          {Object.keys(point.properties).map(key => {
+            const { name } = configuration[key];
+            const value = String(getValue(point.properties[key], configuration[key].type));
 
-             return (
-              <li className={css['popup__elem']}>
+            return (
+              <li key={name} className={css['popup__elem']}>
                 <div className={css['popup__name']}>{name}</div>
                 <div className={css['popup__value']}>{value}</div>
               </li>
-             )
-            })}
-        </ul>;
+            );
+          })}
+        </ul>
+      );
       const popupContentHtml = ReactDOMServer.renderToString(popupContentNode);
       layer.bindPopup(popupContentHtml, {
-        className: css['popup']
+        className: css['popup'],
       });
     },
   }));
@@ -111,7 +112,7 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
 };
 
 const useLeafletHeatLayer: UseLeafletLayer = ({
-  settings,
+  configuration,
   geos,
   visible,
 }) => {
@@ -153,28 +154,28 @@ const Layer: Layer = ({
     _id,
     name,
     description,
-    settings,
+    configuration,
   },
 }) => {
   const { user } = useAuth();
-  const [open, handlerOpen] = useToggle(true);
+  const [open, handlerOpen] = useToggle(false);
   const [visible, handlerVisible] = useToggle(false);
   const [heat, toggleHeat] = useToggle(false);
   const { data, error, loading } = useGetGeos(_id);
 
   useLeafletGeoJSONLayer({
-    settings,
+    configuration,
     geos: data?.geos,
     visible: visible && !heat,
   });
 
   useLeafletHeatLayer({
-    settings,
+    configuration,
     geos: data?.geos,
     visible: visible && heat,
   });
 
-  const isResearcher = user?.access === (UserType.admin || UserType.researcher);
+  const isResearcher = user?.access === (USER_ROLE.ADMIN || USER_ROLE.RESEARCHER);
   let buttonVisible = <Spiner />;
   if (error) {
     buttonVisible = <>X</>;

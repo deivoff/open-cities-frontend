@@ -1,6 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
-import { GeometryType, LayerSettings, LayerSettingType } from '$types/index';
+import { GeometryType, LayerConfigurations, LayerConfigurationType } from '$types/index';
 import { isDate, isNumber } from '$utils/index';
 
 export type Row = {
@@ -9,32 +9,32 @@ export type Row = {
 export type Values = {
   name: string;
   description: string;
-  settings: LayerSettings;
+  configuration: LayerConfigurations;
 }
-export function getDataType(key: string, value: string): LayerSettingType {
-  let type = LayerSettingType.string;
+export function getDataType(key: string, value: string): LayerConfigurationType {
+  let type = LayerConfigurationType.string;
 
   if (key === 'longitude') {
-    return LayerSettingType.longitude;
+    return LayerConfigurationType.longitude;
   }
 
   if (key === 'latitude') {
-    return LayerSettingType.latitude;
+    return LayerConfigurationType.latitude;
   }
 
   if (isNumber(value)) {
-    type = LayerSettingType.number;
+    type = LayerConfigurationType.number;
   }
 
   if (isDate(value)) {
-    type = LayerSettingType.datetime;
+    type = LayerConfigurationType.datetime;
   }
 
   return type;
 }
 
-export function initSettings(row: Row): LayerSettings {
-  return Object.keys(row).reduce<LayerSettings>((acc, key) => ({
+export function initSettings(row: Row): LayerConfigurations {
+  return Object.keys(row).reduce<LayerConfigurations>((acc, key) => ({
     ...acc,
     [key]: {
       key,
@@ -44,42 +44,44 @@ export function initSettings(row: Row): LayerSettings {
   }), {});
 }
 
-export function getValue(value: any, type: LayerSettingType) {
-  if (type === LayerSettingType.datetime) {
-    return moment(value);
+export function getValue(value: any, type: LayerConfigurationType) {
+  if (type === LayerConfigurationType.datetime) {
+    const val = moment(value).format('DD.MM.YYYY HH:MM');
+    console.log({ val, value });
+    return val;
   }
 
-  if (type === LayerSettingType.number) {
+  if (type === LayerConfigurationType.number) {
     return Number(value);
   }
 
   return value;
 }
 
-export function getGeoSettings(settings: LayerSettings) {
-  const mutatedSettings = _.cloneDeep(settings);
-  const geometryLinks = Object.keys(settings).reduce<any>((acc, key) => {
-    if (settings[key].type === LayerSettingType.latitude) {
-      delete mutatedSettings[key];
+export function getGeoConfigurations(configurations: LayerConfigurations) {
+  const mutatedConfigurations = _.cloneDeep(configurations);
+  const geometryLinks = Object.keys(configurations).reduce<any>((acc, key) => {
+    if (configurations[key].type === LayerConfigurationType.latitude) {
+      delete mutatedConfigurations[key];
       return {
         ...acc,
         coordinates: [acc.coordinates[0], key],
       };
     }
 
-    if (settings[key].type === LayerSettingType.longitude) {
-      delete mutatedSettings[key];
+    if (configurations[key].type === LayerConfigurationType.longitude) {
+      delete mutatedConfigurations[key];
       return {
         ...acc,
         coordinates: [key, acc.coordinates[1]],
       };
     }
 
-    if (settings[key].type === LayerSettingType.geotype) {
-      delete mutatedSettings[key];
+    if (configurations[key].type === LayerConfigurationType.geotype) {
+      delete mutatedConfigurations[key];
       return {
         ...acc,
-        type: settings[key].key,
+        type: configurations[key].key,
       };
     }
 
@@ -103,9 +105,9 @@ export function getGeoSettings(settings: LayerSettings) {
       ],
     },
     properties: {
-      ...Object.keys(mutatedSettings).reduce((acc, key) => ({
+      ...Object.keys(mutatedConfigurations).reduce((acc, key) => ({
         ...acc,
-        [key]: getValue(row[key], mutatedSettings[key].type),
+        [key]: getValue(row[key], mutatedConfigurations[key].type),
       }), {}),
     },
   });

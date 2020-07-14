@@ -2,13 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ACCESS_CODE } from "./../../../../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: GetCity
 // ====================================================
 
 export interface GetCity_city_map_settings {
   __typename: "MapSettings";
-  bbox: any[];
+  bbox: any;
   zoom: number;
 }
 
@@ -20,22 +22,23 @@ export interface GetCity_city_map_layers_owner_name {
 
 export interface GetCity_city_map_layers_owner {
   __typename: "User";
-  _id: string;
+  _id: any;
   name: GetCity_city_map_layers_owner_name;
 }
 
 export interface GetCity_city_map_layers {
   __typename: "Layer";
-  _id: string;
+  _id: any;
   name: string;
   description: string;
   owner: GetCity_city_map_layers_owner;
-  settings: any;
+  configuration: any;
+  access: ACCESS_CODE;
 }
 
 export interface GetCity_city_map {
   __typename: "Map";
-  _id: string;
+  _id: any;
   name: string;
   description: string;
   settings: GetCity_city_map_settings;

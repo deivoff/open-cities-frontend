@@ -1,4 +1,4 @@
-mutation CreateGeo($geometry: GeometryInput!, $properties: JSON!, $layer: ID!) {
+mutation CreateGeo($geometry: GeometryInput!, $properties: JSON!, $layer: ObjectId!) {
     createGeo(geoInput: {geometry: $geometry, properties: $properties, layer: $layer}) {
         _id
         geometry {

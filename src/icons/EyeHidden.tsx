@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 const SvgEyeHidden = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width={20} height={14} fill="none" {...props}>

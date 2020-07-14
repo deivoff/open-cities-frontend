@@ -1,5 +1,3 @@
-#import "../../fragments/AccessFragment/query.gql"
-
 mutation CreateMap($mapSettings: MapInput!, $type: AccessType) {
     createMap(mapInput: $mapSettings, type: $type) {
         name
@@ -8,8 +6,6 @@ mutation CreateMap($mapSettings: MapInput!, $type: AccessType) {
             bbox
             zoom
         }
-        access {
-            ...AccessFragment
-        }
+        access
     }
 }

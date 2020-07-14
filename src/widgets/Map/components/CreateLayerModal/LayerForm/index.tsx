@@ -4,7 +4,7 @@ import Maybe from 'graphql/tsutils/Maybe';
 import { useMutation } from '@apollo/react-hooks';
 import { Button } from '$components/layout';
 import {
-  GeoInput, LayerSettings,
+  GeoInput, LayerConfigurations,
 } from '$types/index';
 import {
   CREATE_GEOS, CreateGeos, CreateGeosVariables,
@@ -15,8 +15,8 @@ import {
   GET_LAYERS, GetLayers, GetLayersVariables,
 } from '$apollo/queries';
 import { MainFields } from './MainFields';
-import { SettingsFields } from './SettingsFields';
-import { getGeoSettings, Row, Values } from './utils';
+import { ConfigurationsFields } from './ConfigurationsFields';
+import { getGeoConfigurations, Row, Values } from './utils';
 
 import s from './LayerForm.module.sass';
 
@@ -75,7 +75,9 @@ const useCreateGeosMutation = (
 export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
   const [rows, setRows] = useState<Maybe<Row[]>>(null);
   const [layerId, setLayerId] = useState('');
-  const [completedSettings, setCompletedSettings] = useState<Maybe<LayerSettings>>(null);
+  const [
+    completedConfigurations, setCompletedConfigurations,
+  ] = useState<Maybe<LayerConfigurations>>(null);
   const [createLayer, { data }] = useCreateLayerMutation(mapId);
   const [createGeos] = useCreateGeosMutation(layerId);
 
@@ -86,8 +88,8 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
   }, [data, setLayerId]);
 
   useEffect(() => {
-    if (layerId && completedSettings && rows) {
-      const getSettings = getGeoSettings(completedSettings);
+    if (layerId && completedConfigurations && rows) {
+      const getSettings = getGeoConfigurations(completedConfigurations);
       const geos: GeoInput[] = rows.map(row => ({
         layer: layerId,
         ...getSettings(row),
@@ -99,14 +101,14 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
         },
       });
     }
-  }, [createGeos, rows, layerId, completedSettings]);
+  }, [createGeos, rows, layerId, completedConfigurations]);
 
   const handlerFileLoaded = (fileData: any[]) => {
     setRows(fileData);
   };
 
-  const handlerSetSettings = (settings: LayerSettings) => {
-    setCompletedSettings(settings);
+  const handlerSetSettings = (settings: LayerConfigurations) => {
+    setCompletedConfigurations(settings);
   };
 
   return (
@@ -114,7 +116,7 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
       initialValues={{
         name: '',
         description: '',
-        settings: {},
+        configuration: {},
       }}
       onSubmit={async values => {
         await createLayer({
@@ -128,10 +130,10 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
     >{
         props => (
           <form onSubmit={props.handleSubmit} className={s['layer-form']}>
-            <h2  className={s['layer-form__title']}>Добавление слоя</h2>
+            <h2 className={s['layer-form__title']}>Добавление слоя</h2>
             <MainFields onFileLoaded={handlerFileLoaded} />
             {rows && (
-              <SettingsFields
+              <ConfigurationsFields
                 rows={rows}
                 onSettingsComplete={handlerSetSettings}
               />

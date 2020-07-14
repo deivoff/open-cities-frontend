@@ -21,7 +21,8 @@ query GetCity($url: String!) {
                         familyName
                     }
                 }
-                settings
+                configuration
+                access
             }
         }
     }

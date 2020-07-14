@@ -5,23 +5,6 @@ schema {
     mutation: Mutation
 }
 
-type Access {
-    comment: AccessSettings!
-    coowner: AccessSettingsCoowner!
-    edit: AccessSettings!
-    view: AccessSettings!
-}
-
-type AccessSettings {
-    anyone: Boolean
-    group: [User!]
-    role: UserType
-}
-
-type AccessSettingsCoowner {
-    group: [User!]
-}
-
 type AuthRedirect {
     url: String!
 }
@@ -31,7 +14,7 @@ type AuthResponse {
 }
 
 type City {
-    _id: ID!
+    _id: ObjectId!
     map: Map!
     name: String!
     photo: String!
@@ -39,8 +22,7 @@ type City {
 }
 
 type Geo {
-    _id: ID!
-    author: User!
+    _id: ObjectId!
     createdAt: DateTime!
     geometry: Geometry!
     layer: Layer!
@@ -60,19 +42,19 @@ type GoogleProvider {
 }
 
 type Layer {
-    _id: ID!
-    access: Access!
+    _id: ObjectId!
+    access: ACCESS_CODE!
+    configuration: JSON!
     createdAt: DateTime!
     description: String!
     name: String!
     owner: User!
-    settings: JSON!
     updatedAt: DateTime!
 }
 
 type Map {
-    _id: ID!
-    access: Access!
+    _id: ObjectId!
+    access: ACCESS_CODE!
     createdAt: DateTime!
     description: String!
     draft: Boolean!
@@ -84,7 +66,7 @@ type Map {
 }
 
 type MapSettings {
-    bbox: [GeometryCoords!]!
+    bbox: GeometryCoords!
     zoom: Int!
 }
 
@@ -92,27 +74,28 @@ type Mutation {
     authGoogle(code: String!): AuthResponse!
     createGeo(geoInput: GeoInput!): Geo!
     createGeos(geoInput: [GeoInput!]!): [Geo!]!
-    createLayer(layerInput: LayerInput!, mapId: ID!): Layer!
+    createLayer(layerInput: LayerInput!, mapId: ObjectId!): Layer!
     createMap(mapInput: MapInput!, type: AccessType): Map!
 }
 
 type Query {
     cities: [City!]!
     city(url: String!): City
-    geos(layerId: ID!): [Geo!]!
+    geos(layerId: ObjectId!): [Geo!]!
     getGoogleOAuthRedirect: AuthRedirect!
-    layers(mapId: String!): [Layer!]!
-    map(id: String!): Map
-    maps(userId: String!): [Map!]!
+    layer(layerId: ObjectId!): Layer
+    layers(mapId: ObjectId!): [Layer!]!
+    map(mapId: ObjectId!): Map
+    maps(userId: ObjectId!): [Map!]!
     users: [User!]!
 }
 
 type User {
-    _id: ID!
+    _id: ObjectId!
     email: String!
     name: UserName!
     photos: [UserPhoto!]!
-    role: UserType!
+    role: USER_ROLE!
     social: UserSocial!
 }
 
@@ -129,6 +112,15 @@ type UserSocial {
     googleProvider: GoogleProvider!
 }
 
+enum ACCESS_CODE {
+    COMMENT
+    COOWNER
+    EDIT
+    NONE
+    OWNER
+    VIEW
+}
+
 enum AccessType {
     city
     default
@@ -143,15 +135,15 @@ enum GeometryType {
     Polygon
 }
 
-enum UserType {
-    admin
-    researcher
-    user
+enum USER_ROLE {
+    ADMIN
+    RESEARCHER
+    USER
 }
 
 input GeoInput {
     geometry: GeometryInput!
-    layer: ID!
+    layer: ObjectId!
     properties: JSON!
 }
 
@@ -161,9 +153,9 @@ input GeometryInput {
 }
 
 input LayerInput {
+    configuration: JSON!
     description: String!
     name: String!
-    settings: JSON!
 }
 
 input MapInput {
@@ -173,10 +165,13 @@ input MapInput {
 }
 
 input MapSettingInput {
-    bbox: [GeometryCoords!]!
+    bbox: GeometryCoords!
     zoom: Int!
 }
 
+
+"Mongo object id scalar type"
+scalar ObjectId
 
 "The javascript `Date` as string. Type represents date and time as the ISO Date string."
 scalar DateTime

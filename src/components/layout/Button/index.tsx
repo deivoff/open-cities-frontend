@@ -43,26 +43,23 @@ export const IconButton: IconButton = ({
   children,
   svg = {},
   ...rest
-}) => {
-  
-  return (
-    <button
-      className={cn(
-        css['icon-button'],
-        className,
+}) => (
+  <button
+    className={cn(
+      css['icon-button'],
+      className,
+    )}
+    type={type}
+    {...rest}
+  >
+    <Icon theme={theme} icon={icon} svg={svg} />
+    {children && (
+      <span className={cn(
+        css['icon-button__text'], css[`_${theme}`],
       )}
-      type={type}
-      {...rest}
-    >
-      <Icon theme={theme} icon={icon} svg={svg} />
-      {children && (
-        <span className={cn(
-          css['icon-button__text'], css[`_${theme}`],
-        )}
-        >
-          {children}
-        </span>
-      )}
-    </button>
-  );
-};
+      >
+        {children}
+      </span>
+    )}
+  </button>
+);
