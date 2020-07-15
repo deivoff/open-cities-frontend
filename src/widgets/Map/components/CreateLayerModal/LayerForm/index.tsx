@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
-import Maybe from 'graphql/tsutils/Maybe';
 import { useMutation } from '@apollo/react-hooks';
+import { Maybe } from 'graphql/jsutils/Maybe';
 import { Button } from '$components/layout';
 import {
   GeoInput, LayerConfigurations,
 } from '$types/index';
 import {
   CREATE_GEOS, CreateGeos, CreateGeosVariables,
-  CREATE_LAYER, CreateLayer, CreateLayerVariables,
+  CREATE_LAYER_FOR_MAP, CreateLayerForMap, CreateLayerForMapVariables,
 } from '$apollo/mutations';
 import {
   GET_GEOS, GetGeos, GetGeosVariables,
@@ -27,7 +27,7 @@ type Props = {
 
 const useCreateLayerMutation = (
   mapId: string,
-) => useMutation<CreateLayer, CreateLayerVariables>(CREATE_LAYER, {
+) => useMutation<CreateLayerForMap, CreateLayerForMapVariables>(CREATE_LAYER_FOR_MAP, {
   update: (cache, { data }) => {
     const options = {
       query: GET_LAYERS,
@@ -89,10 +89,10 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
 
   useEffect(() => {
     if (layerId && completedConfigurations && rows) {
-      const getSettings = getGeoConfigurations(completedConfigurations);
-      const geos: GeoInput[] = rows.map(row => ({
+      const getGeoProperties = getGeoConfigurations(completedConfigurations);
+      const geos: GeoInput[] = rows.map((row: Row) => ({
         layer: layerId,
-        ...getSettings(row),
+        ...getGeoProperties(row),
       }));
 
       createGeos({

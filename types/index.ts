@@ -14,6 +14,7 @@ export type LayerConfiguration = {
 export enum LayerConfigurationType {
   string = 'String',
   number = 'Number',
+  link = 'Link',
   datetime = 'Date',
   array = 'Array',
   latitude = 'Latitude',

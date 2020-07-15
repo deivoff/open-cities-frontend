@@ -1,0 +1,12 @@
+mutation CreateLayerForMap($name: String!, $description: String!, $configuration: JSON!, $mapId: ObjectId!) {
+    createLayerForMap(layerInput: { name: $name, description: $description, configuration: $configuration}, mapId: $mapId) {
+        _id
+        name
+        description
+        configuration
+        access
+        owner {
+            role
+        }
+    }
+}

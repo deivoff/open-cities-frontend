@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import ReactDOMServer from 'react-dom/server';
+import ReactDOM from 'react-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { useLeaflet } from 'react-leaflet';
 import { geoJSON } from 'leaflet';
@@ -16,8 +16,7 @@ import { CreateGeoModal } from '../../CreateGeoModal';
 import { LayerConfigurations, USER_ROLE } from '$types/index';
 
 import css from './Layer.module.sass';
-import { getValue } from '$widgets/Map/components/CreateLayerModal/LayerForm/utils';
-
+import { PopupContent } from '$widgets/Popup';
 
 type Layer = React.FC<{
   layer: {
@@ -61,30 +60,27 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
   visible,
 }) => {
   const { map } = useLeaflet();
+  const contentElement = document.createElement('div');
 
-  const { current: geoGroup } = useRef(geoJSON(undefined, {
-    onEachFeature: (point, layer) => {
-      const popupContentNode = (
-        <ul className={css['popup__list']}>
-          {Object.keys(point.properties).map(key => {
-            const { name } = configuration[key];
-            const value = String(getValue(point.properties[key], configuration[key].type));
-
-            return (
-              <li key={name} className={css['popup__elem']}>
-                <div className={css['popup__name']}>{name}</div>
-                <div className={css['popup__value']}>{value}</div>
-              </li>
-            );
-          })}
-        </ul>
-      );
-      const popupContentHtml = ReactDOMServer.renderToString(popupContentNode);
-      layer.bindPopup(popupContentHtml, {
-        className: css['popup'],
-      });
-    },
-  }));
+  const { current: geoGroup } = useRef(
+    geoJSON(
+      undefined,
+      {
+        onEachFeature: (point, layer) => {
+          layer
+            .bindPopup(contentElement, {
+              className: css['popup'],
+            })
+            .on('popupopen', () => {
+              ReactDOM.render(
+                <PopupContent configuration={configuration} properties={point.properties} />,
+                contentElement,
+              );
+            });
+        },
+      },
+    ),
+  );
 
   useEffect(() => {
     if (geos) {
@@ -112,7 +108,6 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
 };
 
 const useLeafletHeatLayer: UseLeafletLayer = ({
-  configuration,
   geos,
   visible,
 }) => {
@@ -202,6 +197,8 @@ const Layer: Layer = ({
       )}
     >
       <div className={cn(css['layer-controller__header'], css[getColor()])}>
+        {buttonVisible}
+        {name}
         <IconButton
           icon="ArrowLeft"
           theme="white"
@@ -209,8 +206,6 @@ const Layer: Layer = ({
           aria-expanded={open}
           className={cn(css['layer-controller__arrow'])}
         />
-        {name}
-        {buttonVisible}
       </div>
       <div
         className={css['layer-controller__body']}

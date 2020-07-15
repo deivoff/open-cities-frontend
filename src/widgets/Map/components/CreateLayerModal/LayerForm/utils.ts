@@ -44,11 +44,26 @@ export function initSettings(row: Row): LayerConfigurations {
   }), {});
 }
 
-export function getValue(value: any, type: LayerConfigurationType) {
+export function getValueToServer(value: any, type: LayerConfigurationType) {
   if (type === LayerConfigurationType.datetime) {
-    const val = moment(value).format('DD.MM.YYYY HH:MM');
-    console.log({ val, value });
+    const val = moment(value).toISOString();
     return val;
+  }
+
+  if (type === LayerConfigurationType.number) {
+    return Number(value);
+  }
+
+  return value;
+}
+
+export function getValueToJSX(value: any, type: LayerConfigurationType) {
+  if (!value) {
+    return '-';
+  }
+
+  if (type === LayerConfigurationType.datetime) {
+    return moment(value).format('DD.MM.YYYY HH:MM');
   }
 
   if (type === LayerConfigurationType.number) {
@@ -107,7 +122,7 @@ export function getGeoConfigurations(configurations: LayerConfigurations) {
     properties: {
       ...Object.keys(mutatedConfigurations).reduce((acc, key) => ({
         ...acc,
-        [key]: getValue(row[key], mutatedConfigurations[key].type),
+        [key]: getValueToServer(row[key], mutatedConfigurations[key].type),
       }), {}),
     },
   });
