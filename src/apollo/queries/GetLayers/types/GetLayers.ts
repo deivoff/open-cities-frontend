@@ -20,6 +20,7 @@ export interface GetLayers_layers {
   description: string;
   configuration: any;
   access: ACCESS_CODE;
+  color: any;
   owner: GetLayers_layers_owner;
 }
 

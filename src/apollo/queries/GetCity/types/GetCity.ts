@@ -31,6 +31,7 @@ export interface GetCity_city_map_layers {
   _id: any;
   name: string;
   description: string;
+  color: any;
   owner: GetCity_city_map_layers_owner;
   configuration: any;
   access: ACCESS_CODE;

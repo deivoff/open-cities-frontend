@@ -20,6 +20,7 @@ export interface CreateLayerForMap_createLayerForMap {
   description: string;
   configuration: any;
   access: ACCESS_CODE;
+  color: any;
   owner: CreateLayerForMap_createLayerForMap_owner;
 }
 

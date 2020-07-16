@@ -5,6 +5,7 @@ mutation CreateLayerForMap($name: String!, $description: String!, $configuration
         description
         configuration
         access
+        color
         owner {
             role
         }

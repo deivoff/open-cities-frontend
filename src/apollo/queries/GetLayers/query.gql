@@ -5,6 +5,7 @@ query GetLayers($mapId: ObjectId!) {
         description
         configuration
         access
+        color
         owner {
             role
         }

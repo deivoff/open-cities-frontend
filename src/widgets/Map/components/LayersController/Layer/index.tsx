@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 import { useQuery } from '@apollo/react-hooks';
 import { useLeaflet } from 'react-leaflet';
-import { geoJSON } from 'leaflet';
+import { geoJSON, divIcon, marker } from 'leaflet';
 import cn from 'classnames';
+import dynamic from 'next/dynamic';
 import { heatLayer } from '$lib/leaflet/heat';
 import {
   GET_GEOS, GetGeos, GetGeosVariables,
@@ -11,7 +13,8 @@ import {
 import { useAuth } from '$context/auth';
 import useToggle from '$hooks/useToggle';
 import { Spiner } from '$components/spiner';
-import { IconButton } from '$components/layout';
+import { Icon, IconButton } from '$components/layout';
+import SvgMapMark from '$icons/MapMark';
 import { CreateGeoModal } from '../../CreateGeoModal';
 import { LayerConfigurations, USER_ROLE } from '$types/index';
 
@@ -23,6 +26,7 @@ type Layer = React.FC<{
     _id: any;
     name: string;
     description?: string;
+    color: string;
     owner: {
       name: {
         givenName: string;
@@ -48,6 +52,7 @@ const getColor = () => '_green';
 
 type LeafletLayer<T extends object> = {
   configuration: LayerConfigurations;
+  color?: string;
   geos?: Geo[];
   visible: boolean;
 } & T;
@@ -58,6 +63,7 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
   configuration,
   geos,
   visible,
+  color,
 }) => {
   const { map } = useLeaflet();
   const contentElement = document.createElement('div');
@@ -66,6 +72,14 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
     geoJSON(
       undefined,
       {
+        pointToLayer: (feature, latLng) => {
+          const icon = divIcon({
+            className: 'null',
+            html: ReactDOMServer.renderToString(<MapMark color={color || '#000'} />),
+          });
+
+          return marker(latLng, { icon });
+        },
         onEachFeature: (point, layer) => {
           layer
             .bindPopup(contentElement, {
@@ -81,6 +95,17 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
       },
     ),
   );
+
+  type MapMark =React.FC<{
+    color: string;
+  }>
+  const MapMark: MapMark = ({ color }) => {
+    return (
+      <div style={{ color }}>
+        <SvgMapMark />
+      </div>
+    );
+  };
 
   useEffect(() => {
     if (geos) {
@@ -150,6 +175,7 @@ const Layer: Layer = ({
     name,
     description,
     configuration,
+    color,
   },
 }) => {
   const { user } = useAuth();
@@ -161,6 +187,7 @@ const Layer: Layer = ({
   useLeafletGeoJSONLayer({
     configuration,
     geos: data?.geos,
+    color,
     visible: visible && !heat,
   });
 
@@ -195,8 +222,13 @@ const Layer: Layer = ({
         className,
         css['layer-controller'],
       )}
+      style={{
+        borderLeftColor: color,
+      }}
     >
-      <div className={cn(css['layer-controller__header'], css[getColor()])}>
+      <div
+        className={cn(css['layer-controller__header'])}
+      >
         {buttonVisible}
         {name}
         <IconButton

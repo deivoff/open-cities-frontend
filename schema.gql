@@ -44,6 +44,7 @@ type GoogleProvider {
 type Layer {
     _id: ObjectId!
     access: ACCESS_CODE!
+    color: HEXColor!
     configuration: JSON!
     createdAt: DateTime!
     description: String!
@@ -74,6 +75,7 @@ type Mutation {
     authGoogle(code: String!): AuthResponse!
     createGeo(geoInput: GeoInput!): Geo!
     createGeos(geoInput: [GeoInput!]!): [Geo!]!
+    createLayer(layerInput: LayerInput!): Layer!
     createLayerForMap(layerInput: LayerInput!, mapId: ObjectId!): Layer!
     createMap(mapInput: MapInput!, type: AccessType): Map!
 }
@@ -175,6 +177,9 @@ scalar ObjectId
 
 "The javascript `Date` as string. Type represents date and time as the ISO Date string."
 scalar DateTime
+
+"A field whose value is a hex color code: https://en.wikipedia.org/wiki/Web_colors."
+scalar HEXColor
 
 "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
 scalar JSON
