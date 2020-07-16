@@ -6,9 +6,11 @@ import {
 } from '$apollo/mutations';
 import { GET_GEOS, GetGeos, GetGeosVariables } from '$apollo/queries';
 import { CreateForm, Values } from './CreateForm';
+import { LayerConfigurations } from '$types/index';
 
 type CreateGeoModal = React.FC<{
   layerId: CreateGeoVariables['layer']
+  configuration: LayerConfigurations;
 }>
 
 const useCreateGeoMutation = (

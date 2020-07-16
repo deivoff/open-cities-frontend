@@ -262,7 +262,7 @@ const Layer: Layer = ({
           />
           Отобразить как тепловую
         </label>
-        {isResearcher && <CreateGeoModal layerId={_id} />}
+        {isResearcher && <CreateGeoModal layerId={_id} configuration={configuration}/>}
       </div>
     </li>
   );
