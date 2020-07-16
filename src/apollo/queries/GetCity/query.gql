@@ -8,7 +8,6 @@ query GetCity($url: String!) {
             description
             settings {
                 bbox
-                zoom
             }
             layers {
                 _id

@@ -16,7 +16,7 @@ import {
 } from '$apollo/queries';
 import { MainFields } from './MainFields';
 import { ConfigurationsFields } from './ConfigurationsFields';
-import { getGeoConfigurations, Row, Values } from './utils';
+import { getGeoConfigurations, Row, Values } from 'src/widgets/Map/components/CreateLayerModal/LayerForm/utils';
 
 import s from './LayerForm.module.sass';
 

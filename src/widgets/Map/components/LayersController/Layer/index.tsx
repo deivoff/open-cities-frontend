@@ -87,7 +87,19 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
             })
             .on('popupopen', () => {
               ReactDOM.render(
-                <PopupContent configuration={configuration} properties={point.properties} />,
+                <PopupContent
+                  configuration={configuration}
+                  properties={point.properties}
+                  onResize={() => {
+                    const popup = layer.getPopup();
+
+                    if (popup) {
+                      setTimeout(
+                        () => popup.update(), 100,
+                      );
+                    }
+                  }}
+                />,
                 contentElement,
               );
             });
@@ -99,13 +111,11 @@ const useLeafletGeoJSONLayer: UseLeafletLayer = ({
   type MapMark =React.FC<{
     color: string;
   }>
-  const MapMark: MapMark = ({ color }) => {
-    return (
-      <div style={{ color }}>
-        <SvgMapMark />
-      </div>
-    );
-  };
+  const MapMark: MapMark = ({ color }) => (
+    <div style={{ color }}>
+      <SvgMapMark />
+    </div>
+  );
 
   useEffect(() => {
     if (geos) {

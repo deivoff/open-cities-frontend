@@ -11,7 +11,6 @@ import { ACCESS_CODE } from "./../../../../../types/globalTypes";
 export interface GetCity_city_map_settings {
   __typename: "MapSettings";
   bbox: any;
-  zoom: number;
 }
 
 export interface GetCity_city_map_layers_owner_name {

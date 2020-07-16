@@ -1,4 +1,5 @@
 import moment from 'moment';
+import React from 'react';
 import _ from 'lodash';
 import { GeometryType, LayerConfigurations, LayerConfigurationType } from '$types/index';
 import { isDate, isNumber } from '$utils/index';
@@ -64,6 +65,10 @@ export function getValueToJSX(value: any, type: LayerConfigurationType) {
 
   if (type === LayerConfigurationType.datetime) {
     return moment(value).format('DD.MM.YYYY HH:MM');
+  }
+
+  if (type === LayerConfigurationType.link) {
+    return (<a href={value} target="_blank" rel="noreferrer">Перейти по ссылке</a>);
   }
 
   if (type === LayerConfigurationType.number) {

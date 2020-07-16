@@ -68,7 +68,6 @@ type Map {
 
 type MapSettings {
     bbox: GeometryCoords!
-    zoom: Int!
 }
 
 type Mutation {
@@ -168,7 +167,6 @@ input MapInput {
 
 input MapSettingInput {
     bbox: GeometryCoords!
-    zoom: Int!
 }
 
 

@@ -12,7 +12,6 @@ interface MapProps {
     description: string;
     settings: {
       bbox: Position[]
-      zoom: number;
     },
     layers: React.ComponentProps<MapComponents.LayersController>['layers']
     _id: any;
@@ -22,15 +21,14 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   map: {
     settings: {
-      zoom, bbox,
+      bbox,
     },
     layers,
     _id,
   },
 }) => (
   <LeafletMap
-    center={latLngBounds(bbox).getCenter()}
-    zoom={zoom}
+    bounds={bbox}
     style={{
       height: 'calc(100vh - var(--header-height))',
     }}

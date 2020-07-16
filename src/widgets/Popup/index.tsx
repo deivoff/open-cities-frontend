@@ -7,8 +7,13 @@ import { IconButton } from '$components/layout';
 type PopupContent = React.FC<{
   configuration: any;
   properties: any;
+  onResize?: () => void;
 }>
-export const PopupContent: PopupContent = ({ configuration, properties }) => {
+export const PopupContent: PopupContent = ({
+  configuration,
+  properties,
+  onResize = () => {},
+}) => {
   const [more, setMore] = useState(false);
   const sortedPropertiesKeys = useMemo(() => Object.keys(properties)
     .sort((
@@ -37,7 +42,10 @@ export const PopupContent: PopupContent = ({ configuration, properties }) => {
       <IconButton
         icon="ArrowTop"
         theme="transparent-blue"
-        onClick={() => setMore(!more)}
+        onClick={() => {
+          setMore(!more);
+          onResize();
+        }}
         aria-expanded={more}
         className={cn(css['layer-controller__arrow'])}
       >

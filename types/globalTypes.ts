@@ -54,7 +54,6 @@ export interface MapInput {
 
 export interface MapSettingInput {
   bbox: any;
-  zoom: number;
 }
 
 //==============================================================

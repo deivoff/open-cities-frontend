@@ -11,7 +11,6 @@ import { MapInput, AccessType, ACCESS_CODE } from "./../../../../../types/global
 export interface CreateMap_createMap_settings {
   __typename: "MapSettings";
   bbox: any;
-  zoom: number;
 }
 
 export interface CreateMap_createMap {

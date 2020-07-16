@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import CSVReader from 'react-csv-reader';
-import { Values } from './utils';
+import { Values } from 'src/widgets/Map/components/CreateLayerModal/LayerForm/utils';
 import { Icon } from '$components/layout';
 
 import s from './LayerForm.module.sass';

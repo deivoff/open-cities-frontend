@@ -4,7 +4,6 @@ mutation CreateMap($mapSettings: MapInput!, $type: AccessType) {
         description
         settings {
             bbox
-            zoom
         }
         access
     }

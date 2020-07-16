@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import s from 'src/widgets/Map/components/CreateLayerModal/LayerForm/ConfigurationsFields.module.sass';
 import { LayerConfiguration, LayerConfigurations, LayerConfigurationType } from '$types/index';
 import { getRandomInt } from '$utils/index';
-import { Values, Row, initSettings } from './utils';
+import { Values, Row, initSettings } from 'src/widgets/Map/components/CreateLayerModal/LayerForm/utils';
 
 
 type SettingsFields = React.FC<{
