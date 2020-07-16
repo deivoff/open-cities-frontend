@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Maybe from 'graphql/tsutils/Maybe';
 import { useFormikContext } from 'formik';
 import s from 'src/widgets/Map/components/CreateLayerModal/LayerForm/ConfigurationsFields.module.sass';
 import { LayerConfiguration, LayerConfigurations, LayerConfigurationType } from '$types/index';
@@ -12,9 +11,9 @@ type SettingsFields = React.FC<{
   onSettingsComplete: (configurations: LayerConfigurations) => void;
 }>
 export const ConfigurationsFields: SettingsFields = ({ rows, onSettingsComplete }) => {
-  const [configurations, setSettings] = useState<Maybe<LayerConfigurations>>(null);
+  const [configurations, setSettings] = useState<LayerConfigurations | null>(null);
   const [disabled, setDisabled] = useState(false);
-  const [row, setRow] = useState<Maybe<Row>>(null);
+  const [row, setRow] = useState<Row | null>(null);
   const formik = useFormikContext<Values>();
 
   useEffect(() => {
