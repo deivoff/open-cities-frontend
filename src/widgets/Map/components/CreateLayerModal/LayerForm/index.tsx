@@ -36,7 +36,7 @@ const useCreateLayerMutation = (
       },
     };
 
-    const returnedLayer = data!.createLayer;
+    const returnedLayer = data!.createLayerForMap;
     const cashedLayers = cache.readQuery<GetLayers, GetLayersVariables>(options);
     cache.writeQuery<GetLayers, GetLayersVariables>({
       ...options,
@@ -83,7 +83,7 @@ export const LayerForm: React.FC<Props> = ({ formClose, mapId }) => {
 
   useEffect(() => {
     if (data) {
-      setLayerId(data.createLayer._id);
+      setLayerId(data.createLayerForMap._id);
     }
   }, [data, setLayerId]);
 
