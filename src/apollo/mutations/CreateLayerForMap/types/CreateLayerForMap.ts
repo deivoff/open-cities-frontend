@@ -33,4 +33,5 @@ export interface CreateLayerForMapVariables {
   description: string;
   configuration: any;
   mapId: any;
+  color: any;
 }

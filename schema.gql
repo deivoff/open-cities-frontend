@@ -154,6 +154,7 @@ input GeometryInput {
 }
 
 input LayerInput {
+    color: HEXColor!
     configuration: JSON!
     description: String!
     name: String!

@@ -1646,6 +1646,20 @@
             "defaultValue": null
           },
           {
+            "name": "color",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "HEXColor",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
             "name": "configuration",
             "description": null,
             "type": {

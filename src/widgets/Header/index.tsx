@@ -31,7 +31,7 @@ const CitiesList: React.FC = () => {
         {cities
           ? cities.map(({ name, url }) => (
             <Nav.Elem key={name}>
-              <Link href="/city/[city]" as={`/city/${url}`}>
+              <Link href="/cities/[city]" as={`/cities/${url}`}>
                 <a>
                   {name}
                 </a>

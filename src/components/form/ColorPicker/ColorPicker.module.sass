@@ -1,0 +1,41 @@
+.color-picker
+  display: flex
+  flex-direction: column
+  position: relative
+
+  &__label
+    margin-bottom: 6px
+
+  &__control
+    display: flex
+    padding: 0
+    border: none
+    border-radius: 2px
+    cursor: pointer
+
+  &__button
+    width: 60px
+    height: 40px
+
+
+  &__icon
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #E5E5E5
+    height: 40px
+    width: 70px
+
+
+  &__cover
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+
+  &__popover
+    position: absolute
+    z-index: 2
+    top: calc(100% + 5px)
+

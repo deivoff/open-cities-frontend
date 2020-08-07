@@ -8,6 +8,7 @@ export type LayerConfiguration = {
   name: string;
   type: LayerConfigurationType;
   description?: string;
+  hide?: boolean;
   nested?: LayerConfigurations;
 }
 

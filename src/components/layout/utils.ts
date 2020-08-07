@@ -1,1 +1,7 @@
-export type Theme = 'main-green' | 'white' | 'google' | 'main-blue' | 'disabled' | 'transparent-blue';
+export type Theme = 'main-green'
+  | 'white'
+  | 'google'
+  | 'main-blue'
+  | 'blue'
+  | 'disabled'
+  | 'transparent-blue';

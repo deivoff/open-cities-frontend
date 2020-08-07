@@ -1,13 +1,24 @@
 @import './../../../static/styles/grid'
 
 .page
+  display: grid
+  grid-template: "header" auto "content" minmax(calc(100vh - 80px), auto) "footer" auto / 100vw
+
+  &__content
+    grid-area: content
+    display: flex
+    background-color: var(--background-gray)
+
   &__title
-    font-size: 36px
-    line-height: 43px
-    margin-top: 62px
-    margin-bottom: 62px
+    margin-top: 36px
+    margin-bottom: 30px
+    font-size: 20px
+    line-height: 24px
     color: var(--main-color)
 
   &__wrapper
-    padding-left: 30px
-    padding-right: 30px
+    margin-left: auto
+    margin-right: auto
+    padding: 0 30px
+    max-width: 990px
+    width: 100%

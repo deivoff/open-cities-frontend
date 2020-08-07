@@ -1,0 +1,8 @@
+query GetCityMapId($url: String!) {
+    city(url: $url) {
+        map {
+            _id
+            name
+        }
+    }
+}

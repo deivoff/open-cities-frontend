@@ -3,6 +3,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { Banner } from '$widgets/MainBanner';
 import { getRandomInt } from '$utils/index';
+import { Header } from '$widgets/Header';
+import { Page } from '$components/layout';
 
 const MAX_DOTS = 150;
 const INITIAL_DOTS = 0;
@@ -28,7 +30,12 @@ const Home: NextPage = () => {
         <title>Главная | Открытые города</title>
         <meta name="google-site-verification" content="W-Z_tdIa68wRmSq14_MTbc9l7JhF30Uuv98Gw3NhOYM" />
       </Head>
-      <Banner dots={dots} />
+      <Page>
+        <Header fixed />
+        <Page.Content>
+          <Banner dots={dots} />
+        </Page.Content>
+      </Page>
     </>
   );
 };

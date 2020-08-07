@@ -1,0 +1,38 @@
+.fileloader
+  display: block
+
+  &__input
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+
+  &__button
+    display: flex
+    align-items: center
+    min-height: 44px
+    padding: 10px 14px
+    font-size: 14px
+    background-color: var(--blue)
+    border-radius: 20px
+    color: white
+
+  &__control
+    display: flex
+    align-items: center
+    cursor: pointer
+
+  &__label
+    margin-left: 10px
+
+  &__icon
+    background: white
+    margin: 0 6px 0 0
+
+    &._loaded
+      transform: rotate(45deg)
+      margin: 0 0 0 6px
+
+

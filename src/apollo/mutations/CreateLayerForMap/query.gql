@@ -1,5 +1,5 @@
-mutation CreateLayerForMap($name: String!, $description: String!, $configuration: JSON!, $mapId: ObjectId!) {
-    createLayerForMap(layerInput: { name: $name, description: $description, configuration: $configuration}, mapId: $mapId) {
+mutation CreateLayerForMap($name: String!, $description: String!, $configuration: JSON!, $mapId: ObjectId!, $color: HEXColor!) {
+    createLayerForMap(layerInput: { name: $name, description: $description, configuration: $configuration, color: $color}, mapId: $mapId) {
         _id
         name
         description
