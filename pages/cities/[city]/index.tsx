@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Error from 'next/error';
 import { NextPage } from 'next';
@@ -11,8 +10,7 @@ import {
   GET_CITY, GetCity,
 } from '$apollo/queries';
 import { Header } from '$widgets/Header';
-
-const DynamicMap = dynamic(() => import('$widgets/Map_old'), { ssr: false });
+import { CityMap } from '$widgets/Map';
 
 const CityMapPage: NextPage = () => {
   const { query } = useRouter();
@@ -40,7 +38,11 @@ const CityMapPage: NextPage = () => {
       </Head>
       <Header />
       <Page.Map>
-        <DynamicMap map={map} />
+        <CityMap
+          bbox={map.settings.bbox}
+          layers={map.layers}
+          mapId={map._id}
+        />
       </Page.Map>
     </>
   );

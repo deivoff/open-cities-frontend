@@ -15,7 +15,7 @@ type Props<T> = SelectProps<T> & {
   labelClassName?: string;
   className?: string;
 }
-export const Select = <T, >({
+const Select = <T, >({
   label,
   labelClassName = '',
   className = '',
@@ -36,3 +36,5 @@ export const Select = <T, >({
     </div>
   );
 };
+
+export default Select;

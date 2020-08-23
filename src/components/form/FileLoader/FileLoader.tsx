@@ -10,7 +10,7 @@ import { getLabelClassNames } from '$components/form';
 
 const INITIAL_STATE = {
   title: 'Загрузить файл с данными',
-  label: 'Форматы JSON, CSV',
+  label: 'Формат CSV',
   loaded: false,
 };
 type State = typeof INITIAL_STATE;

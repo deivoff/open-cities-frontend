@@ -9,6 +9,7 @@ import { Page } from '$components/layout';
 import { useAuth } from '$context/auth';
 import { GET_MAPS, GetMaps, GetMapsVariables } from '$apollo/queries';
 import { Spiner } from '$components/spiner';
+import { Header } from '$widgets/Header';
 
 const CreateMapModal = dynamic(() => import('$widgets/Map_old/components/CreateMapModal'), { ssr: false });
 
@@ -34,13 +35,16 @@ const UserMapsPage: NextPage = () => {
           {user?.name.givenName} {user?.name.familyName} | Открытые города
         </title>
       </Head>
-      <Page.Wrapper>
-        Карты
-        <CreateMapModal />
-        <ul>
-          {maps.map(({ name, _id }) => (<li key={_id}>{name}</li>))}
-        </ul>
-      </Page.Wrapper>
+      <Header />
+      <Page>
+        <Page.Wrapper>
+          Карты
+          <CreateMapModal />
+          <ul>
+            {maps.map(({ name, _id }) => (<li key={_id}>{name}</li>))}
+          </ul>
+        </Page.Wrapper>
+      </Page>
     </>
   );
 };

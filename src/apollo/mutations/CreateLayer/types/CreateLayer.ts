@@ -5,15 +5,15 @@
 import { ACCESS_CODE, USER_ROLE } from "./../../../../../types/globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: CreateLayerForMap
+// GraphQL mutation operation: CreateLayer
 // ====================================================
 
-export interface CreateLayerForMap_createLayerForMap_owner {
+export interface CreateLayer_createLayer_owner {
   __typename: "User";
   role: USER_ROLE;
 }
 
-export interface CreateLayerForMap_createLayerForMap {
+export interface CreateLayer_createLayer {
   __typename: "Layer";
   _id: any;
   name: string;
@@ -21,17 +21,17 @@ export interface CreateLayerForMap_createLayerForMap {
   configuration: any;
   access: ACCESS_CODE;
   color: any;
-  owner: CreateLayerForMap_createLayerForMap_owner;
+  owner: CreateLayer_createLayer_owner;
 }
 
-export interface CreateLayerForMap {
-  createLayerForMap: CreateLayerForMap_createLayerForMap;
+export interface CreateLayer {
+  createLayer: CreateLayer_createLayer;
 }
 
-export interface CreateLayerForMapVariables {
+export interface CreateLayerVariables {
   name: string;
   description: string;
   configuration: any;
-  mapId: any;
   color: any;
+  mapId?: any | null;
 }

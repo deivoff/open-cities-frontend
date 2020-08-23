@@ -5,7 +5,7 @@ import { Position } from '$types/index';
 type Map = React.FC<{
   bbox: Position[]
 }>
-export const Map: Map = ({
+const Map: Map = ({
   bbox,
   children,
 }) => (
@@ -24,3 +24,5 @@ export const Map: Map = ({
     <ZoomControl position="bottomright" />
   </LeafletMap>
 );
+
+export default Map;

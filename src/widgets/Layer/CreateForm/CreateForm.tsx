@@ -14,7 +14,7 @@ type Values = {
   name: string;
   description: string;
   color: string;
-  configuration: Record<string, LayerConfiguration>;
+  configuration: Record<LayerConfiguration['key'], LayerConfiguration>;
 }
 
 type Row = {
@@ -23,8 +23,9 @@ type Row = {
 type Props = {
   className?: string;
   onSubmit: (values: Values) => void;
-};
-export const CreateForm = withFormik<Props, Values>({
+  onDataLoaded?: (rows: Row[]) => void;
+}
+const CreateForm = withFormik<Props, Values>({
   mapPropsToValues: () => ({
     name: '',
     description: '',
@@ -39,11 +40,16 @@ export const CreateForm = withFormik<Props, Values>({
   setFieldValue,
   values,
   className = '',
+  onDataLoaded,
 }) => {
   const [rows, setRows] = useState<Row[] | null>(null);
   const handlerFileLoaded = useCallback((data: any[]) => {
     setRows(data);
-  }, [setRows]);
+
+    if (onDataLoaded) {
+      onDataLoaded(data);
+    }
+  }, [setRows, onDataLoaded]);
 
   return (
     <form onSubmit={handleSubmit} className={cn(s['layer-form'], className)}>
@@ -90,3 +96,5 @@ export const CreateForm = withFormik<Props, Values>({
     </form>
   );
 });
+
+export default CreateForm;

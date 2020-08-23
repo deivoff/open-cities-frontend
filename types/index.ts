@@ -1,8 +1,6 @@
 export * from './globalTypes';
 
-export type LayerConfigurations = {
-  [key in LayerConfiguration['key']]: LayerConfiguration;
-}
+export type LayerConfigurations = Record<LayerConfiguration['key'], LayerConfiguration>
 export type LayerConfiguration = {
   key: string;
   name: string;

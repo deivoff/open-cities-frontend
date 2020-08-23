@@ -4,7 +4,6 @@ import { IconButton } from '$components/index';
 import { useAuth } from '$context/auth';
 import { USER_ROLE } from '$types/index';
 import Layer from './Layer';
-import CreateLayerModal from '../CreateLayerModal';
 
 import css from './index.module.sass';
 
@@ -33,7 +32,6 @@ export const LayersController: LayersController = ({ layers, mapId }) => {
         <h3>Слои</h3>
       </div>
       <Layers layers={layers} />
-      {isResearcher && <CreateLayerModal mapId={mapId} />}
     </div>
   );
 };

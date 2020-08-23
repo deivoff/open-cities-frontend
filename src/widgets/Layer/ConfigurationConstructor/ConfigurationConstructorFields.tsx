@@ -6,7 +6,7 @@ import { getRandomInt } from '$utils/index';
 import { initConfiguration, Row, ConfigurationValues } from './utils';
 
 import s from './ConfigurationConstructor.module.sass';
-import { ConfigurationConstructorField } from '$widgets/Layer/ConfigurationConstructor/ConfigurationConstructorField';
+import { ConfigurationConstructorField } from './ConfigurationConstructorField';
 
 type ConfigurationConstructorFields = React.FC<{
   rows?: Row[] | null;
@@ -22,7 +22,7 @@ const COLUMNS = [
   'Описание',
 ];
 
-export const ConfigurationConstructorFields: ConfigurationConstructorFields = ({
+const ConfigurationConstructorFields: ConfigurationConstructorFields = ({
   rows,
   className = '',
   disabled,
@@ -31,7 +31,6 @@ export const ConfigurationConstructorFields: ConfigurationConstructorFields = ({
   const [testRow, setTestRow] = useState<Row | null>(null);
 
   const formik = useFormikContext<ConfigurationValues>();
-  console.log(formik.values);
 
   useEffect(() => {
     if (rows) {
@@ -63,3 +62,5 @@ export const ConfigurationConstructorFields: ConfigurationConstructorFields = ({
     </div>
   );
 };
+
+export default ConfigurationConstructorFields;

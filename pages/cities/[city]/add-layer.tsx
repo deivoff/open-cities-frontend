@@ -8,7 +8,7 @@ import { GET_CITY_MAP_ID, GetCityMapId } from '$apollo/queries';
 import { Spiner } from '$components/spiner';
 import { Card, H1, Page } from '$components/layout';
 import { Header } from '$widgets/Header';
-import * as Layer from '$widgets/Layer';
+import { CreateLayer as LayerCreateForm } from '$widgets/Layer';
 
 const AddLayerToCityMapPage: NextPage = () => {
   const { query } = useRouter();
@@ -41,7 +41,7 @@ const AddLayerToCityMapPage: NextPage = () => {
           <H1>Добавление слоя</H1>
           <Card>
             <Card.Title>Загрузка</Card.Title>
-            <Layer.CreateForm onSubmit={val => console.log(val)} />
+            <LayerCreateForm mapId={_id} />
           </Card>
         </Page.Wrapper>
       </Page>

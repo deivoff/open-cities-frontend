@@ -19,7 +19,7 @@ import { LayerConfigurations, USER_ROLE } from '$types/index';
 
 import css from './Layer.module.sass';
 import { Mark, Popup } from '$components/map';
-import { getValueToJSX } from '$widgets/Map_old/components/CreateLayerModal/LayerForm/utils';
+import { getValueToJSX } from '$widgets/Layer/ConfigurationConstructor/utils';
 
 type Layer = React.FC<{
   layer: {

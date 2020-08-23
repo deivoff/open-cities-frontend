@@ -1,0 +1,13 @@
+mutation CreateLayer($name: String!, $description: String!, $configuration: JSON!, $color: HEXColor!, $mapId: ObjectId) {
+    createLayer(layerInput: { name: $name, description: $description, configuration: $configuration, color: $color}, mapId: $mapId) {
+        _id
+        name
+        description
+        configuration
+        access
+        color
+        owner {
+            role
+        }
+    }
+}

@@ -1380,54 +1380,19 @@
         "description": null,
         "fields": [
           {
-            "name": "createLayerForMap",
+            "name": "createLayer",
             "description": null,
             "args": [
               {
                 "name": "mapId",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ObjectId",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "ObjectId",
+                  "ofType": null
                 },
                 "defaultValue": null
               },
-              {
-                "name": "layerInput",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "LayerInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Layer",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "createLayer",
-            "description": null,
-            "args": [
               {
                 "name": "layerInput",
                 "description": null,
